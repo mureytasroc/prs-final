@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>P,R,S - Stats</title>
+		<link rel="stylesheet" href="styles/style.css">
+		<link href="https://fonts.googleapis.com/css?family=Roboto|Slabo+27px" rel="stylesheet">
+	</head>
+	<body>
+		<% include global/header %>
+		<div id="stats" class="bodydiv">
+			<h2>Stats</h2>
+			<table id="statsTable">
+				<tr>
+					<th class="top_row">Player Name</th>
+					<th class="top_row">Rank</th>
+					<th class="top_row">Player Type</th>
+					<th class="top_row">Games Played</th>
+					<th class="top_row">Games Won</th>
+					<th class="top_row">Games Lost</th>
+					<th class="top_row">Games Tied</th>
+					<th class="top_row">Paper</th>
+					<th class="top_row">Rock</th>
+					<th class="top_row">Scissors</th>
+					<th class="top_row">Points</th>
+					<th class="top_row">Villain Strategy</th>
+				</tr>
+				<%- tableText%>
+			</table>
+		</div>
+		<% include global/footer %>
+		<script src="scripts/scripts.js"></script>
+	</body>
+</html>

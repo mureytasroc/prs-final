@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>P,R,S - Game</title>
+		<link rel="stylesheet" href="styles/style.css">
+		<link href="https://fonts.googleapis.com/css?family=Roboto|Slabo+27px" rel="stylesheet">
+	</head>
+	<body>
+		<span id="userBox"><%if(locals.user){%><%=user.username%><%}%></span>
+		<% include global/header %>
+		<div id="feedback">
+		</div>
+		<div id="throw_choice" class="bodydiv">
+			<h2>Play the Game</h2>
+			<h4 id="greeter">It's your turn to bust a move!</h4>
+			<form id="gameForm" action="/" method="get">
+				Enter your choice of weapon:<br>
+				<select name="weapon" required>
+					<option value=""> </option>
+					<option value="paper">Paper</option>
+					<option value="rock">Rock</option>
+					<option value="scissors">Scissors</option>
+				</select>
+				<br>
+				Enter your choice of villian:<br>
+				<select name="villain" required>
+					<option value=""> </option>
+					<option value="Bones">Bones</option>
+					<option value="Gato">Gato</option>
+					<option value="Manny">Manny</option>
+					<option value="Mr. Modern">Mr. Modern</option>
+					<option value="Regal">Regal</option>
+					<option value="The Boss">The Boss</option>
+					<option value="Comic Hans">Comic Hans</option>
+					<option value="Harry">Harry</option>
+					<option value="Mickey">Mickey</option>
+					<option value="Pixie">Pixie</option>
+					<option value="Spock">Spock</option>
+					<option value="The Magician">The Magician</option>
+				</select>
+				<br><br>
+				<button type = "submit" id="throw_choice_button">Throw Choice</button>
+			</form>
+		</div>
+		<div id="referee" class="bodydiv">
+			<p id="referee-text">Referee: "Three!"</p>
+			<img id="refImage" src="images/ref/three.svg">
+		</div>
+		<% include global/footer %>
+		<script src="scripts/scripts.js"></script>
+	</body>
+</html>

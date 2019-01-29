@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>P,R,S - Rules</title>
+		<link rel="stylesheet" href="styles/style.css">
+		<link href="https://fonts.googleapis.com/css?family=Roboto|Slabo+27px" rel="stylesheet">
+	</head>
+	<body>
+		<% include global/header %>
+		<div id="rules" class="bodydiv">
+			<h2>Rules</h2>
+			<br>
+			<u>The game of Paper, Rock, Scissors (PRS) is based on trust, skill and determination</u><br><br>
+			It is a simultaneous, zero sum, potentially repeated, imperfect complete informational, fixed rules, uncooperative game<br>
+			The strategy choices available to each player are to throw paper, rock, or scissors<br>
+			The game has only two players, you and your selected opponent<br><br>
+			Payoff matrix (where your strategy choices are rows and your opponent's strategy choices are columns):<br><br>
+			<table id="rulesTable">
+				<tr>
+					<th>&darr; Strats &rarr; </th>
+					<th>Paper</th>
+					<th>Rock</th>
+					<th>Scissors</th>
+				</tr>
+				<tr>
+					<th>Paper</th>
+					<th>tie</th>
+					<th>win</th>
+					<th>loss</th>
+				</tr>
+				<th>Rock</th>
+				<th>loss</th>
+				<th>tie</th>
+				<th>win</th>
+				<tr>
+				</tr>
+				<th>Scissors</th>
+				<th>win</th>
+				<th>loss</th>
+				<th>tie</th>
+			</table>
+			<br>
+			While some villains pick their strategies uniformly randomly, others have different strategy selection criteria.  See the stats page for a summary of each villain's criteria.
+			<br>
+			<br>
+			To sign up for a new account, visit the log-in page and type your desired username and password into the form.  If your desired username is taken, the page will report that the entered password was incorrect (unless you entered the correct password for the taken account, in which case you are rewarded with a headstart on your stats).  In future versions we could make a more secure and intuitive sign-up form.
+			<br>
+			<br>
+            <u>Scoring</u>
+			<br>
+			Rank on the leaderboard is determined by a scoring system that awards 3 points for a win, 1 point for a tie, and 0 points for a loss.<br><br>
+			<a href="https://www.wrpsa.com/">The World Rock Paper Scissors Association</a>
+		</div>
+		<% include global/footer %>
+		<script src="scripts/scripts.js"></script>
+	</body>
+</html>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   data-name="Warstwa 1"
+   viewBox="0 0 82.120003 54"
+   x="0px"
+   y="0px"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="mr_modern_scissors.svg"
+   width="82.120003"
+   height="54">
+  <metadata
+     id="metadata12">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>hand_scissors</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs10" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="754"
+     inkscape:window-height="480"
+     id="namedview8"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:zoom="2.36"
+     inkscape:cx="42"
+     inkscape:cy="32"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg2" />
+  <title
+     id="title4">hand_scissors</title>
+  <path
+     d="M 81,31.22 64.52,24 78.82,24 82,20.83 82,13.17 78.83,10 42,10 42,3.17 38.83,0 17.17,0 0,17.17 0,36.83 17.17,54 l 28.66,0 3,-3 2.7,-16.21 22.6,8.68 4.16,-1.12 3.83,-6.63 z m -5.3,7.66 -1.3,0.35 -26,-10 -3.27,19.77 -1,1 -25.3,0 L 4,35.17 4,18.83 18.83,4 37.17,4 38,4.83 38,10 28,10 28,14 77.17,14 78,14.83 78,19.17 77.17,20 52,20 l 0,2.87 25.6,11.25 0.27,1 z"
+     id="path6"
+     inkscape:connector-curvature="0" />
+</svg>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>P,R,S - Index</title>
+		<link rel="stylesheet" href="styles/style.css">
+		<link href="https://fonts.googleapis.com/css?family=Roboto|Slabo+27px" rel="stylesheet">
+	</head>
+	<body>
+		<% include global/header %>
+		<div id="feedback">
+		</div>
+		<div id="enter_name" class="bodydiv">
+			<h2>Welcome to Paper, Rock, Scissors</h2>
+			<%if(locals.user){%>
+			<p><%=user.result%></p>
+			<%}else{%>
+			<p><%="Please log in or enter your desired username and password if you are a new user."%></p>
+			<%}%>
+			<form action="/login" method="get">
+				Username:<input type="text" id="enter_name_input" name="player_name" required>
+				Password:<input type="text" id="enter_password_input" name="player_password" required>
+				<button type="submit" id = "enter_name_button">Login</button>
+			</form>
+		</div>
+		<span id="userBox"><%for(var i=0;i<users.length;i++){%><%-users[i]%>,<%}%></span>
+		<% include global/footer %>
+		<script src="scripts/scripts.js"></script>
+	</body>
+</html>

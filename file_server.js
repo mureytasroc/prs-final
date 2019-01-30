@@ -102,7 +102,8 @@ app.get('/contact', function (request, response) {
 });
 
 app.get('/stats', function (request, response) {
-	var user_data = User.getUsers().concat(Villain.getVillains()); //gets/combines users/villains
+    var villain_data  = Villain.getVillains()
+	var user_data = User.getUsers().concat(villain_data); //combines users/villains
 
 	user_data = user_data.sort(function (a, b) { //sorts users according to points in descending order
 		return b["points"] - a["points"];
@@ -111,9 +112,9 @@ app.get('/stats', function (request, response) {
 	var userCount = 0;
 	var maxNum;
 	if (request.query.username) {
-		maxNum = 20 - villains_lines.length - 1;
+		maxNum = 20 - villain_data.length - 1;
 	} else {
-		maxNum = 20 - villains_lines.length;
+		maxNum = 20 - villain_data.length;
 	}
 	user_data = user_data.filter(function (a, i) {
 		if (a["isVillain"]) {

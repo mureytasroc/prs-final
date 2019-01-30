@@ -83,18 +83,18 @@ exports.getVillains=function() { //gets villains data from villains.csv
 }
 
 exports.setVillain=function(villainObject) { //updates villain data
-	var a = getVillains();
+	var a = exports.getVillains();
 	var name = villainObject["name"];
 	for (var i = 0; i < a.length; i++) {
 		if (name == a[i]["name"]) {
 			a[i] = villainObject;
 		}
 	}
-	sendVillains(a);
+	exports.sendVillains(a);
 }
 
 exports.getVillainByName=function(name) { //returns villain object by name
-	var villain_data = getVillains();
+	var villain_data = exports.getVillains();
 	for (var i = 0; i < villain_data.length; i++) {
 		if (name == villain_data[i]["name"]) {
 			return villain_data[i];

@@ -8,7 +8,7 @@ exports.setUser=function(ob) { //updates user data
 			a[i] = ob;
 		}
 	}
-	sendUsers(a);
+	exports.sendUsers(a);
 }
 
 exports.checkUsername=function(username, password) { //handles login
@@ -38,7 +38,7 @@ exports.createUser=function(username, password) { //creates new user
 	user_object["scissors"] = 0;
 	var a = exports.getUsers();
 	a.push(user_object);
-	sendUsers(a);
+	exports.sendUsers(a);
 }
 
 exports.getUserByName=function(username) { //returns user object by username

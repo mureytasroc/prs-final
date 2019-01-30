@@ -16,6 +16,7 @@ app.listen(port, function () {
 app.use(require('./controllers/user'));
 var User = require(__dirname +'/models/User');
 var Villain = require(__dirname +'/models/Villain');
+var GameLogic = require(__dirname +'/util/game_logic');
 
 //////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////GET request handling (largely uncommented)/////////////////////
@@ -60,8 +61,8 @@ app.get('/login', function (request, response) {
 
 app.get('/:user/results', function (request, response) {
 	var villain = request.query.villain;
-	var browserChoice = Villain.browserOutcome(villain, request.query.weapon);
-	var outcome = findResult(request.params.user, browserChoice, request.query.weapon, villain);
+	var browserChoice = GameLogic.browserOutcome(villain, request.query.weapon);
+	var outcome = GameLogic.findResult(request.params.user, browserChoice, request.query.weapon, villain);
 	var result = {
 		name: request.params.user,
 		weapon: request.query.weapon,
@@ -102,8 +103,7 @@ app.get('/contact', function (request, response) {
 });
 
 app.get('/stats', function (request, response) {
-    var villain_data  = Villain.getVillains()
-	var user_data = User.getUsers().concat(villain_data); //combines users/villains
+	var user_data = User.getUsers().concat(Villain.getVillains()); //gets/combines users/villains
 
 	user_data = user_data.sort(function (a, b) { //sorts users according to points in descending order
 		return b["points"] - a["points"];
@@ -112,9 +112,9 @@ app.get('/stats', function (request, response) {
 	var userCount = 0;
 	var maxNum;
 	if (request.query.username) {
-		maxNum = 20 - villain_data.length - 1;
+		maxNum = 20 - villains_lines.length - 1;
 	} else {
-		maxNum = 20 - villain_data.length;
+		maxNum = 20 - villains_lines.length;
 	}
 	user_data = user_data.filter(function (a, i) {
 		if (a["isVillain"]) {
@@ -155,79 +155,3 @@ app.get('/stats', function (request, response) {
 		tableText: tableText
 	});
 });
-
-//////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////Helper Methods//////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////
-
-function findResult(username, brows, user, villain) { //computes game result
-	if (brows == user) {
-		tied(username, brows, user, villain);
-		return "tied"
-	}
-	if (brows == "rock" && user == "scissors") {
-		lost(username, brows, user, villain);
-		return "lost"
-	}
-	if (brows == "scissors" && user == "rock") {
-		won(username, brows, user, villain);
-		return "won"
-	}
-	if (brows == "rock" && user == "paper") {
-		won(username, brows, user, villain);
-		return "won"
-	}
-	if (brows == "paper" && user == "rock") {
-		lost(username, brows, user, villain);
-		return "lost"
-	}
-	if (brows == "scissors" && user == "paper") {
-		lost(username, brows, user, villain);
-		return "lost"
-	}
-	if (brows == "paper" && user == "scissors") {
-		won(username, brows, user, villain);
-		return "won"
-	}
-}
-
-function tied(username, browsC, throwC, villain) { //handles ties
-	var userObject = User.getUserByName(username);
-	userObject[throwC]++;
-	userObject["games_played"]++;
-	User.setUser(userObject);
-
-	var villainObject = Villain.getVillainByName(villain);
-	villainObject[browsC]++;
-	villainObject["games_played"]++;
-	Villain.setVillain(villainObject);
-
-}
-
-function won(username, browsC, throwC, villain) { //handles wins
-	var userObject = User.getUserByName(username);
-	userObject[throwC]++;
-	userObject["games_played"]++;
-	userObject["games_won"]++;
-	User.setUser(userObject);
-
-	var villainObject = Villain.getVillainByName(villain);
-	villainObject[browsC]++;
-	villainObject["games_played"]++;
-	villainObject["games_lost"]++;
-	Villain.setVillain(villainObject);
-}
-
-function lost(username, browsC, throwC, villain) { //handles losses
-	var userObject = User.getUserByName(username);
-	userObject[throwC]++;
-	userObject["games_played"]++;
-	userObject["games_lost"]++;
-	User.setUser(userObject);
-
-	var villainObject = Villain.getVillainByName(villain);
-	villainObject[browsC]++;
-	villainObject["games_played"]++;
-	villainObject["games_won"]++;
-	Villain.setVillain(villainObject);
-}

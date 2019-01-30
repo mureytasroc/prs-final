@@ -1,7 +1,7 @@
 var fs = require("fs");
 
 exports.setUser=function(ob) { //updates user data
-	var a = getUsers();
+	var a = exports.getUsers();
 	var username = ob["username"];
 	for (var i = 0; i < a.length; i++) {
 		if (username == a[i]["username"]) {
@@ -12,7 +12,7 @@ exports.setUser=function(ob) { //updates user data
 }
 
 exports.checkUsername=function(username, password) { //handles login
-	user_data = getUsers();
+	user_data = exports.getUsers();
 	for (var i = 0; i < user_data.length; i++) {
 		if (username == user_data[i]["username"]) {
 			if (password == user_data[i]["password"]) {
@@ -36,13 +36,13 @@ exports.createUser=function(username, password) { //creates new user
 	user_object["paper"] = 0;
 	user_object["rock"] = 0;
 	user_object["scissors"] = 0;
-	var a = getUsers();
+	var a = exports.getUsers();
 	a.push(user_object);
 	sendUsers(a);
 }
 
 exports.getUserByName=function(username) { //returns user object by username
-	var user_data = getUsers();
+	var user_data = exports.getUsers();
 	for (var i = 0; i < user_data.length; i++) {
 		if (username == user_data[i]["username"]) {
 			return user_data[i];

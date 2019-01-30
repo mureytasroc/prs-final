@@ -14,8 +14,12 @@
   <div id="enter_name">
     <h2>User Details - <%=user.name%></h2>
     <br>
-    Name: <%=user.name%><br>
-    Password: <%=user.password%><br>
+      <form>
+  First name:<br>
+  <input type="text" name="firstname" value="<%-user.name%>"><br>
+  Last name:<br>
+  <input type="text" name="lastname" value="<%-user.password%>">
+</form>
     <br>
   </div>
   <footer>

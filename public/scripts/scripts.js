@@ -22,7 +22,10 @@ if (document.title == "P,R,S - Game") {
 if (localUser) { //if user is already logged in
 	document.getElementById("headerLogout").innerHTML = "Log Out";
 	document.getElementById("headerGreeter").innerHTML = "Logged in as " + localUser + " | ";
+    document.getElementById("headerEdit").innerHTML = "Edit Account Info";
+    document.getElementById("headerEdit").href = "/users/"+localUser+"/edit";
 	document.getElementById("statsLink").href = "/stats?username=" + localUser;
+    
 } else {
 	document.getElementById("headerLogout").innerHTML = "Log In";
 	document.getElementById("headerLogout").href = "/";

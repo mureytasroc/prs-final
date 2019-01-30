@@ -88,15 +88,15 @@ td {
 }
 
 .hidden {
-	display: none
+	display: none;
 }
 
 .visible {
-	display: block
+	display: block;
 }
 
-#headerLogout {
-	cursor: pointer
+.link{
+    cursor: pointer;
 }
 
 .userImage {

@@ -61,7 +61,7 @@ app.get('/login', function (request, response) {
 
 app.get('/:user/results', function (request, response) {
 	var villain = request.query.villain;
-	var browserChoice = GameLogic.browserOutcome(villain, request.query.weapon);
+	var browserChoice = Villain.browserOutcome(villain, request.query.weapon);
 	var outcome = GameLogic.findResult(request.params.user, browserChoice, request.query.weapon, villain);
 	var result = {
 		name: request.params.user,

@@ -1,6 +1,6 @@
 var fs = require("fs");
 
-function setUser(ob) { //updates user data
+exports.setUser=function(ob) { //updates user data
 	var a = getUsers();
 	var username = ob["username"];
 	for (var i = 0; i < a.length; i++) {
@@ -11,7 +11,7 @@ function setUser(ob) { //updates user data
 	sendUsers(a);
 }
 
-function checkUsername(username, password) { //handles login
+exports.checkUsername=function(username, password) { //handles login
 	user_data = getUsers();
 	for (var i = 0; i < user_data.length; i++) {
 		if (username == user_data[i]["username"]) {
@@ -26,7 +26,7 @@ function checkUsername(username, password) { //handles login
 	return "created new user";
 }
 
-function createUser(username, password) { //creates new user
+exports.createUser=function(username, password) { //creates new user
 	var user_object = new Object();
 	user_object["username"] = username;
 	user_object["password"] = password;
@@ -41,7 +41,7 @@ function createUser(username, password) { //creates new user
 	sendUsers(a);
 }
 
-function getUserByName(username) { //returns user object by username
+exports.getUserByName=function(username) { //returns user object by username
 	var user_data = getUsers();
 	for (var i = 0; i < user_data.length; i++) {
 		if (username == user_data[i]["username"]) {
@@ -51,7 +51,7 @@ function getUserByName(username) { //returns user object by username
 	return null;
 }
 
-function getUsers() { //gets users data from users.csv
+exports.getUsers=function() { //gets users data from users.csv
 	var user_data = [];
 	var user_file = fs.readFileSync("data/users.csv", "utf8");
 	var user_lines = user_file.split('\n');
@@ -71,7 +71,7 @@ function getUsers() { //gets users data from users.csv
 	return user_data;
 }
 
-function sendUsers(user_data) { //updates users.csv
+exports.sendUsers=function(user_data) { //updates users.csv
 	var string = "username,password,games_played,games_won,games_lost,paper,rock,scissors";
 	for (var i = 0; i < user_data.length; i++) {
 		var a = ""

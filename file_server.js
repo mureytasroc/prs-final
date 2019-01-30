@@ -60,7 +60,7 @@ app.get('/login', function (request, response) {
 
 app.get('/:user/results', function (request, response) {
 	var villain = request.query.villain;
-	var browserChoice = browserOutcome(villain, request.query.weapon);
+	var browserChoice = Villain.browserOutcome(villain, request.query.weapon);
 	var outcome = findResult(request.params.user, browserChoice, request.query.weapon, villain);
 	var result = {
 		name: request.params.user,
@@ -102,40 +102,7 @@ app.get('/contact', function (request, response) {
 });
 
 app.get('/stats', function (request, response) {
-	var user_data = [];
-	var user_file = fs.readFileSync("data/users.csv", "utf8");
-	var user_lines = user_file.split('\n');
-	var villains_file = fs.readFileSync("data/villains.csv", "utf8");
-	var villains_lines = villains_file.split('\n');
-
-	for (var i = 1; i < user_lines.length; i++) { //get user data
-		var user_object = {};
-		var single_user = user_lines[i].trim().split(',');
-		user_object["username"] = single_user[0];
-		user_object["games_played"] = single_user[2];
-		user_object["games_won"] = single_user[3];
-		user_object["games_lost"] = single_user[4];
-		user_object["paper"] = single_user[5];
-		user_object["rock"] = single_user[6];
-		user_object["scissors"] = single_user[7];
-		user_object["points"] = user_object["games_won"] * 3 + (user_object["games_played"] - user_object["games_lost"] - user_object["games_won"]);
-		user_data.push(user_object);
-	}
-
-	for (var i = 1; i < villains_lines.length; i++) { //gets villain data
-		var user_object = {};
-		var single_user = villains_lines[i].trim().split(',');
-		user_object["username"] = single_user[0];
-		user_object["games_played"] = single_user[2];
-		user_object["games_won"] = single_user[3];
-		user_object["games_lost"] = single_user[4];
-		user_object["paper"] = single_user[5];
-		user_object["rock"] = single_user[6];
-		user_object["scissors"] = single_user[7];
-		user_object["isVillain"] = true;
-		user_object["points"] = user_object["games_won"] * 3 + (user_object["games_played"] - user_object["games_lost"] - user_object["games_won"]);
-		user_data.push(user_object);
-	}
+	var user_data = User.getUsers().concat(Villain.getVillains()); //gets/combines users/villains
 
 	user_data = user_data.sort(function (a, b) { //sorts users according to points in descending order
 		return b["points"] - a["points"];
@@ -243,12 +210,12 @@ function findResult(username, brows, user, villain) { //computes game result
 }
 
 function tied(username, browsC, throwC, villain) { //handles ties
-	var userObject = getUserByName(username);
+	var userObject = User.getUserByName(username);
 	userObject[throwC]++;
 	userObject["games_played"]++;
 	User.setUser(userObject);
 
-	var villainObject = getVillainByName(villain);
+	var villainObject = Villain.getVillainByName(villain);
 	villainObject[browsC]++;
 	villainObject["games_played"]++;
 	Villain.setVillain(villainObject);
@@ -256,13 +223,13 @@ function tied(username, browsC, throwC, villain) { //handles ties
 }
 
 function won(username, browsC, throwC, villain) { //handles wins
-	var userObject = getUserByName(username);
+	var userObject = User.getUserByName(username);
 	userObject[throwC]++;
 	userObject["games_played"]++;
 	userObject["games_won"]++;
 	User.setUser(userObject);
 
-	var villainObject = getVillainByName(villain);
+	var villainObject = Villain.getVillainByName(villain);
 	villainObject[browsC]++;
 	villainObject["games_played"]++;
 	villainObject["games_lost"]++;
@@ -270,13 +237,13 @@ function won(username, browsC, throwC, villain) { //handles wins
 }
 
 function lost(username, browsC, throwC, villain) { //handles losses
-	var userObject = getUserByName(username);
+	var userObject = User.getUserByName(username);
 	userObject[throwC]++;
 	userObject["games_played"]++;
 	userObject["games_lost"]++;
 	User.setUser(userObject);
 
-	var villainObject = getVillainByName(villain);
+	var villainObject = Villain.getVillainByName(villain);
 	villainObject[browsC]++;
 	villainObject["games_played"]++;
 	villainObject["games_won"]++;

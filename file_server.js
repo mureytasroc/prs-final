@@ -141,26 +141,7 @@ app.get('/stats', function (request, response) {
 		var villainStrategy = "";
 		if (user_data[i]['isVillain']) {
 			playerType = "Villain";
-			switch (user_data[i]['username']) {
-				case "The Boss":
-					villainStrategy = "Always wins";
-					break;
-				case "Bones":
-					villainStrategy = "Always plays rock";
-					break;
-				case "Gato":
-					villainStrategy = "Always plays paper";
-					break;
-				case "Manny":
-					villainStrategy = "Always plays scissors";
-					break;
-				case "Mr. Modern":
-					villainStrategy = "Random between scissors and paper";
-					break;
-				default:
-					villainStrategy = "Random";
-					break;
-			}
+			villainStrategy=user_data[i]['strategy'];
 		} else {
 			playerType = "User";
 		}

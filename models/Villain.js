@@ -54,6 +54,29 @@ exports.getVillains=function() { //gets villains data from villains.csv
 		villain_object["paper"] = single_villain[5];
 		villain_object["rock"] = single_villain[6];
 		villain_object["scissors"] = single_villain[7];
+        villain_object["strategy"]  = "Random";
+        
+        switch (villain_object["name"]) {
+				case "The Boss":
+					villain_object["strategy"] = "Always wins";
+					break;
+				case "Bones":
+					villain_object["strategy"] = "Always plays rock";
+					break;
+				case "Gato":
+					villain_object["strategy"] = "Always plays paper";
+					break;
+				case "Manny":
+					villain_object["strategy"] = "Always plays scissors";
+					break;
+				case "Mr. Modern":
+					villain_object["strategy"] = "Random between scissors and paper";
+					break;
+				default:
+					villain_object["strategy"] = "Random";
+					break;
+        }
+        
 		villain_data.push(villain_object);
 	}
 	return villain_data;

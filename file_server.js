@@ -55,7 +55,6 @@ app.get('/login', function (request, response) {
 });
 
 app.get('/:user/results', function (request, response) {
-	getVillainByName("Gato");
 	var villain = request.query.villain;
 	var browserChoice = browserOutcome(villain, request.query.weapon);
 	var outcome = findResult(request.params.user, browserChoice, request.query.weapon, villain);

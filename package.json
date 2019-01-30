@@ -8,7 +8,7 @@
         "ejs": "^2.6.1",
         "express": "^4.13.3",
         "heroku": "^7.19.4",
-        "node": "^11.7.0",
+        "node": "^11.8.0",
         "serve-favicon": "^2.5.0"
     },
     "author": "Anton Stengel, Charles Cunningham",

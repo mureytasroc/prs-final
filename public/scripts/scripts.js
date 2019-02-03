@@ -78,3 +78,9 @@ function onTimerElapsed() { //handles ref actions
 		clearInterval(onTimerElapsed);
 	}
 }
+
+if(document.title=="P,R,S - User Details"){
+    document.getElementById("headerEdit").innerHTML = "";
+    document.getElementById("headerEdit").href = "/";
+    document.getElementById("headerGreeter").innerHTML = "Logged in as " + localUser;
+}

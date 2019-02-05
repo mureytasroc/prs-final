@@ -91,15 +91,34 @@ router.delete('/users/:id', function(req, res){
   res.render('user_details', {user:u});
 });
 
+
+
+
+
 router.post('/users', function(req, res){
-  console.log('Post- /user/'+req.params.id);
-
-  var u = User.getUserByName(req.params.id);
-
-  res.status(200);
-  res.setHeader('Content-Type', 'text/html')
-  res.render('user_details', {user:u});
+  console.log('Post- /user/'+req.params.id); //logs stuff to console
+    
+  res = exports.checkNewUser(req.query.id, req.query.password, req.query.password2); //gives response on whether this is a proper new user
+  var user_data = {
+    result: res
+  };
+  
+  if ((res == "User already taken") || (res == "Passwords do not match")) { //if new user isn't valid
+    response.status(200);
+    response.setHeader('Content-Type', 'text/html')
+    response.render('user_details', {user:user_data}); //lets login page show error message by sendinb back user information with result information
+  } else { //if new user is valid
+    exports.createUser(req.query.id, req.query.password, req.query.fname, req.query.lname); //creates new user
+    var u = User.getUserByName(req.params.id); //creates object of new user
+    res.status(200);
+    res.setHeader('Content-Type', 'text/html')
+    res.render('index', {user:u}); //sends you to index with your logged in user information.
+  }
 });
+
+
+
+
 
 router.get('/login', function (request, response) {
 	var res = User.checkUsername(request.query.player_name, request.query.player_password);

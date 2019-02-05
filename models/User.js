@@ -25,6 +25,19 @@ exports.checkUsername=function(username, password) { //handles login
 	return "Wrong user/password";
 }
 
+exports.checkNewUser=function(username, password, password2) { //checks whether new user is already taken
+    user_data = exports.getUsers();
+    for (var i = 0; i < user_data.length; i++) {
+        if (username == user_data[i]["username"]) {
+            return "User already taken";
+        }
+    }
+    if (password != password2) {
+        return "Passwords do not match";
+    }
+    return "Logged in";
+}
+
 exports.createUser=function(username, password, fname, lname) { //creates new user
 	var user_object = new Object();
 	user_object["username"] = username;

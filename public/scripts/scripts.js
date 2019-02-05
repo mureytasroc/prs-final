@@ -82,5 +82,4 @@ function onTimerElapsed() { //handles ref actions
 if(document.title=="P,R,S - User Details"){
     document.getElementById("headerEdit").innerHTML = "";
     document.getElementById("headerEdit").href = "/";
-    document.getElementById("headerGreeter").innerHTML = "Logged in as " + localUser;
 }

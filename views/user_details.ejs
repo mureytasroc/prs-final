@@ -12,14 +12,29 @@
   <div id="feedback">
   </div>
   <div id="enter_name">
-    <h2>User Details - <%=user.name%></h2>
+    <h2>User Details<%if(locals.user){%> - <%-user.username%><%}%></h2>
+      <%if(!locals.user){%><%=user.results%><%}%>
     <br>
-      <form>
+      <form action="/users<%if(locals.user){%>/<%-user.username%><%}%>" method="<%if(locals.user){%>put<%}else{%>post<%}%>">
   First name:<br>
-  <input type="text" name="firstname" value="<%-user.fname%>"><br>
+  <input type="text" name="fname" value="<%if(locals.user){%><%-user.fname%><%}%>" required><br>
   Last name:<br>
-  <input type="text" name="lastname" value="<%-user.fname%>">
+  <input type="text" name="lname" value="<%if(locals.user){%><%-user.lname%><%}%>" required><br>
+          Username:<br>
+    <input type="text" name="id" value="<%if(locals.user){%><%-user.username%><%}%>" required><br>
+          Password:<br>
+          <input type="text" name="password" value="<%if(locals.user){%><%-user.password%><%}%>" required><br>
+          Reenter Password:<br>
+          <input type="text" name="password2" value="<%if(locals.user){%><%-user.password%><%}%>" required><br>
+          <button type="submit"><%if(locals.user){%>Submit changes<%}else{%>Create new user<%}%></button>
 </form>
+      <%if(locals.user){%>
+      <br>
+      <form action="/users/<%-user.username%>" method="delete">
+          Danger zone:<br>
+          <button type="submit">Delete account</button>
+          </form>
+      <%}%>
     <br>
   </div>
   <% include global/footer %>

@@ -10,7 +10,7 @@ if (document.title == "P,R,S - Game") {
 		window.location.replace("/");
 	} else {
 		document.getElementById("greeter").textContent = localUser[0].toUpperCase() + localUser.substring(1) + ", it's your turn to bust a move!";
-		document.getElementById("gameForm").action = "/" + localUser + "/results";
+		document.getElementById("gameForm").action = "/user/" + localUser + "/results";
 	}
 	window.addEventListener("load", function () {
 		var refImg = document.getElementById("refImage");

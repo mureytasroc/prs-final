@@ -1,32 +1,35 @@
 var fs = require("fs");
 
+var User = require(__dirname +'/../models/User');
+var Villain = require(__dirname +'/../models/Villain');
+
 exports.findResult = function(username, brows, user, villain) { //updates user data
    if (brows == user) {
-		tied(username, brows, user, villain);
+		exports.tied(username, brows, user, villain);
 		return "tied"
 	}
 	if (brows == "rock" && user == "scissors") {
-		lost(username, brows, user, villain);
+		exports.lost(username, brows, user, villain);
 		return "lost"
 	}
 	if (brows == "scissors" && user == "rock") {
-		won(username, brows, user, villain);
+		exports.won(username, brows, user, villain);
 		return "won"
 	}
 	if (brows == "rock" && user == "paper") {
-		won(username, brows, user, villain);
+		exports.won(username, brows, user, villain);
 		return "won"
 	}
 	if (brows == "paper" && user == "rock") {
-		lost(username, brows, user, villain);
+		exports.lost(username, brows, user, villain);
 		return "lost"
 	}
 	if (brows == "scissors" && user == "paper") {
-		lost(username, brows, user, villain);
+		exports.lost(username, brows, user, villain);
 		return "lost"
 	}
 	if (brows == "paper" && user == "scissors") {
-		won(username, brows, user, villain);
+		exports.won(username, brows, user, villain);
 		return "won"
 	}
 }

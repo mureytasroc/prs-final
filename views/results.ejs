@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<title>P,R,S - Results</title>
-		<link rel="stylesheet" href="../styles/style.css">
+		<link rel="stylesheet" href="../../styles/style.css">
 		<link href="https://fonts.googleapis.com/css?family=Roboto|Slabo+27px" rel="stylesheet">
 	</head>
 	<body>
@@ -10,8 +10,8 @@
 		<%var villainID= ((results.villain).toLowerCase()).split(' ').join('_').split('.').join('');%>
 		<div class="bodydiv">
 			<div class="imageHolder">
-				<img class="villainImage" id="<%-villainID%>" src="../images/<%-villainID%>_<%-results.browserChoice%>.svg">
-				<img class="userImage" src="../images/<%-results.weapon%>.jpg">
+				<img class="villainImage" id="<%-villainID%>" src="../../images/<%-villainID%>_<%-results.browserChoice%>.svg">
+				<img class="userImage" src="../../images/<%-results.weapon%>.jpg">
 			</div>
 		</div>
 		<div id="referee" class="bodydiv">
@@ -19,10 +19,10 @@
 			<p id="referee_response">Referee: "<%=whoWon%><%=results.villain%> threw <%=results.browserChoice%> (left), and <%=results.name%> threw <%=results.weapon%> (right)."</p>
 			<div class="imageHolder">
 				<%var refColor= "blackSVG"; if(results.outcome=="won"){refColor="greenSVG"}if(results.outcome=="lost"){refColor="redSVG"}%>
-				<img id="refImage" class="<%- refColor%>" src="../images/ref/<%-results.outcome%>.svg">
+				<img id="refImage" class="<%- refColor%>" src="../../images/ref/<%-results.outcome%>.svg">
 			</div>
 		</div>
 		<% include global/footer %>
-		<script src="../scripts/scripts.js"></script>
+		<script src="../../scripts/scripts.js"></script>
 	</body>
 </html>

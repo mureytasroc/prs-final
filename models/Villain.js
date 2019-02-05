@@ -4,7 +4,7 @@ exports.sendVillains=function(browser_data) { //updates villains.csv
 	var string = "name,special,games_played,games_won,games_lost,paper,rock,scissors";
 	for (var i = 0; i < browser_data.length; i++) {
 		var a = ""
-		a += "\n" + browser_data[i]["name"] + "," + browser_data[i]["special"] + "," + browser_data[i]["games_played"] + "," + browser_data[i]["games_won"] + "," + browser_data[i]["games_lost"] + "," + browser_data[i]["paper"] + "," + browser_data[i]["rock"] + "," + browser_data[i]["scissors"];
+		a += "\n" + browser_data[i]["username"] + "," + browser_data[i]["special"] + "," + browser_data[i]["games_played"] + "," + browser_data[i]["games_won"] + "," + browser_data[i]["games_lost"] + "," + browser_data[i]["paper"] + "," + browser_data[i]["rock"] + "," + browser_data[i]["scissors"];
 		string += a;
 	}
 	fs.writeFileSync("data/villains.csv", string, "utf8");
@@ -46,7 +46,7 @@ exports.getVillains=function() { //gets villains data from villains.csv
 	for (var i = 1; i < villain_lines.length; i++) {
 		var villain_object = {};
 		var single_villain = villain_lines[i].trim().split(',');
-		villain_object["name"] = single_villain[0];
+		villain_object["username"] = single_villain[0];
 		villain_object["strategy"] = single_villain[1];
 		villain_object["games_played"] = single_villain[2];
 		villain_object["games_won"] = single_villain[3];
@@ -55,8 +55,10 @@ exports.getVillains=function() { //gets villains data from villains.csv
 		villain_object["rock"] = single_villain[6];
 		villain_object["scissors"] = single_villain[7];
         villain_object["strategy"]  = "Random";
+        villain_object['isVillain'] = true;
+        villain_object['points'] =  villain_object["games_won"]*3+(villain_object["games_played"]-villain_object["games_won"] -villain_object["games_lost"]);
         
-        switch (villain_object["name"]) {
+        switch (villain_object["username"]) {
 				case "The Boss":
 					villain_object["strategy"] = "Always wins";
 					break;
@@ -84,9 +86,9 @@ exports.getVillains=function() { //gets villains data from villains.csv
 
 exports.setVillain=function(villainObject) { //updates villain data
 	var a = exports.getVillains();
-	var name = villainObject["name"];
+	var name = villainObject["username"];
 	for (var i = 0; i < a.length; i++) {
-		if (name == a[i]["name"]) {
+		if (name == a[i]["username"]) {
 			a[i] = villainObject;
 		}
 	}
@@ -96,7 +98,7 @@ exports.setVillain=function(villainObject) { //updates villain data
 exports.getVillainByName=function(name) { //returns villain object by name
 	var villain_data = exports.getVillains();
 	for (var i = 0; i < villain_data.length; i++) {
-		if (name == villain_data[i]["name"]) {
+		if (name == villain_data[i]["username"]) {
 			return villain_data[i];
 		}
 	}

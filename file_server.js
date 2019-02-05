@@ -33,51 +33,6 @@ app.get('/', function (request, response) {
 	});
 });
 
-app.get('/login', function (request, response) {
-	var res = User.checkUsername(request.query.player_name, request.query.player_password);
-	var user_data = {
-		username: request.query.player_name,
-		password: request.query.player_password,
-		result: res
-	};
-	if (res != "Wrong password") {
-		response.status(200);
-		response.setHeader('Content-Type', 'text/html')
-		response.render('game', {
-			user: user_data
-		});
-	} else {
-		var users = User.getUsers().map(function (a) {
-			return a["username"];
-		});
-		response.status(200);
-		response.setHeader('Content-Type', 'text/html')
-		response.render('index', {
-			user: user_data,
-			users: users
-		}); //lets login page show error message
-	}
-});
-
-app.get('/:user/results', function (request, response) {
-	var villain = request.query.villain;
-	var browserChoice = Villain.browserOutcome(villain, request.query.weapon);
-	var outcome = GameLogic.findResult(request.params.user, browserChoice, request.query.weapon, villain);
-	var result = {
-		name: request.params.user,
-		weapon: request.query.weapon,
-		browserChoice: browserChoice,
-		outcome: outcome,
-		villain: request.query.villain
-	};
-	response.status(200);
-	response.setHeader('Content-Type', 'text/html')
-	response.render('results', {
-		username: request.params.user,
-		results: result
-	});
-});
-
 app.get('/rules', function (request, response) {
 	response.status(200);
 	response.setHeader('Content-Type', 'text/html')
@@ -103,7 +58,8 @@ app.get('/contact', function (request, response) {
 });
 
 app.get('/stats', function (request, response) {
-	var user_data = User.getUsers().concat(Villain.getVillains()); //gets/combines users/villains
+    var villains_lines = Villain.getVillains();
+	var user_data = User.getUsers().concat(villains_lines); //gets/combines users/villains
 
 	user_data = user_data.sort(function (a, b) { //sorts users according to points in descending order
 		return b["points"] - a["points"];

@@ -106,13 +106,13 @@ router.post('/users', function(req, res){
   if ((res == "User already taken") || (res == "Passwords do not match")) { //if new user isn't valid
     response.status(200);
     response.setHeader('Content-Type', 'text/html')
-    response.render('user_details', {user:user_data}); //lets login page show error message by sendinb back user information with result information
+    response.render('user_details', {new:user_data}); //lets login page show error message by sendinb back user information with result information
   } else { //if new user is valid
     exports.createUser(req.query.id, req.query.password, req.query.fname, req.query.lname); //creates new user
     var u = User.getUserByName(req.params.id); //creates object of new user
     res.status(200);
     res.setHeader('Content-Type', 'text/html')
-    res.render('index', {new:u}); //sends you to index with your logged in user information.
+    res.render('index', {user:u}); //sends you to index with your logged in user information.
   }
 });
 

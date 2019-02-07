@@ -13,7 +13,7 @@
   </div>
   <div id="enter_name">
     <h2>User Details<%if(locals.user){%> - <%-user.username%><%}%></h2>
-      <%if(!locals.user){%><%=user.results%><%}%>
+      <%if(locals.new){%><%=new.results%><%}%>
     <br>
       <form action="/users<%if(locals.user){%>/<%-user.username%><%}%>" method="<%if(locals.user){%>put<%}else{%>post<%}%>">
   First name:<br>

@@ -96,23 +96,29 @@ router.delete('/users/:id', function(req, res){
 
 
 router.post('/users', function(req, res){
-  console.log('Post- /user/'+req.params.id); //logs stuff to console
-
-  res = exports.checkNewUser(req.query.id, req.query.password, req.query.password2); //gives response on whether this is a proper new user
+  console.log('Post- /user/'+req.body.id); //logs stuff to console
+console.log(req.query);
+  response = User.checkNewUser(req.body.id, req.body.password, req.body.password2); //gives response on whether this is a proper new user
   var user_data = {
-    result: res
+    result: response
   };
 
-  if ((res == "User already taken") || (res == "Passwords do not match")) { //if new user isn't valid
-    response.status(200);
-    response.setHeader('Content-Type', 'text/html')
-    response.render('user_details', {new:user_data}); //lets login page show error message by sendinb back user information with result information
+  var users = User.getUsers().map(function (a) {
+		return a["username"];
+	});
+
+  console.log("in post route method");
+
+  if ((response == "User already taken") || (response == "Passwords do not match")) { //if new user isn't valid
+    res.status(200);
+    res.setHeader('Content-Type', 'text/html')
+    res.render('user_details', {new:user_data}); //lets login page show error message by sendinb back user information with result information
   } else { //if new user is valid
-    exports.createUser(req.query.id, req.query.password, req.query.fname, req.query.lname); //creates new user
+    User.createUser(req.body.id, req.body.password, req.body.fname, req.body.lname); //creates new user
     var u = User.getUserByName(req.params.id); //creates object of new user
     res.status(200);
     res.setHeader('Content-Type', 'text/html')
-    res.render('index', {user:u}); //sends you to index with your logged in user information.
+    res.render('index', {user:u, users:users}); //sends you to index with your logged in user information.
   }
 });
 

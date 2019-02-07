@@ -32,7 +32,11 @@ exports.checkNewUser=function(username, password, password2) { //checks whether 
             return "User already taken";
         }
     }
+		console.log(password);
+		console.log(password2);
+		console.log("User.js");
     if (password != password2) {
+			console.log("yes");
         return "Passwords do not match";
     }
     return "Logged in";
@@ -82,7 +86,7 @@ exports.getUsers=function() { //gets users data from users.csv
 		user_object["scissors"] = single_user[7];
         user_object["fname"] = single_user[8];
         user_object["lname"] = single_user[9];
-        
+
         user_object["points"]=user_object["games_won"]*3+user_object["games_played"]-user_object["games_won"]-user_object["games_lost"];
 		user_data.push(user_object);
 	}

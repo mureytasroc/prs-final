@@ -11,9 +11,10 @@
 
   <div id="feedback">
   </div>
-  <div id="enter_name">
-    <h2>User Details <%if(locals.user){%><%-user.username%><%}%></h2>
+  <div id="enter_name" class="bodydiv">
 
+    <h2>User Details <%if(locals.user){%><%-user.username%><%}%></h2>
+    <!-- <p><%=new[result]%></p> -->
     <br>
       <form action="/users<%if(locals.user){%>/<%-user.username%><%}%>" method="<%if(locals.user){%>put<%}else{%>post<%}%>">
   First name:<br>

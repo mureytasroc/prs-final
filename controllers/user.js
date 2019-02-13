@@ -96,12 +96,15 @@ router.delete('/users/:id', function(req, res){
 
 
 router.post('/users', function(req, res){
-  console.log('Post- /user/'+req.body.id); //logs stuff to console
-console.log(req.query);
+  console.log('Post- /user/'+req.params.id); //logs stuff to console
+  console.log(req.query);
+  console.log(req.body);
   response = User.checkNewUser(req.body.id, req.body.password, req.body.password2); //gives response on whether this is a proper new user
   var user_data = {
     result: response
   };
+
+  console.log(response);
 
   var users = User.getUsers().map(function (a) {
 		return a["username"];

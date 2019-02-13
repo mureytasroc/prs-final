@@ -32,11 +32,7 @@ exports.checkNewUser=function(username, password, password2) { //checks whether 
             return "User already taken";
         }
     }
-		console.log(password);
-		console.log(password2);
-		console.log("User.js");
     if (password != password2) {
-			console.log("yes");
         return "Passwords do not match";
     }
     return "Logged in";

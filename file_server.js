@@ -3,17 +3,22 @@ var fs = require('fs');
 var favicon = require('serve-favicon');
 
 var app = express();
+
 app.use(express.static('public'));
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.use(favicon(__dirname + '/public/images/logo.png'));
+
+
+app.use(express.urlencoded());
+app.use(require('./controllers/user'));
+
 
 var port = process.env.PORT || 3000;
 app.listen(port, function () {
 	console.log('Server started at ' + new Date() + ', on port ' + port + '!');
 });
 
-app.use(require('./controllers/user'));
 var User = require(__dirname +'/models/User');
 var Villain = require(__dirname +'/models/Villain');
 var GameLogic = require(__dirname +'/util/game_logic');

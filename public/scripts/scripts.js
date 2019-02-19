@@ -1,11 +1,11 @@
 var localUser = localStorage.getItem("currentUser");
 
 if (document.title == "P,R,S - Game") {
-	var userBox = document.getElementById("userBox").innerHTML;
-	if (!localUser && userBox != "") {
-		localStorage.setItem('currentUser', userBox);
-		localUser = localStorage.getItem("currentUser");
-	}
+	// var userBox = document.getElementById("userBox").innerHTML;
+	// if (!localUser && userBox != "") {
+	// 	localStorage.setItem('currentUser', userBox);
+	// 	localUser = localStorage.getItem("currentUser");
+	// }
 	if (!localUser) {
 		window.location.replace("/");
 	} else {
@@ -25,27 +25,27 @@ if (localUser) { //if user is already logged in
     document.getElementById("headerEdit").innerHTML = "Edit Account Info";
     document.getElementById("headerEdit").href = "/users/"+localUser+"/edit";
 	document.getElementById("statsLink").href = "/stats?username=" + localUser;
-    
+
 } else {
 	document.getElementById("headerLogout").innerHTML = "Log In";
 	document.getElementById("headerLogout").href = "/";
 }
 
 if (document.title == "P,R,S - Index") { //handles login checking and redirection
-	if (localUser) {
-		var found = false;
-		document.getElementById("userBox").innerHTML.slice(0, -1).split(",").forEach(function (a) {
-			if (a == localUser) {
-				found = true;
-				window.location.replace("/game");
-			}
-		});
-		if (!found) {
-			localStorage.clear();
-		}
-	} else {
-		document.getElementById("headerLogout").innerHTML = "";
-	}
+	// if (localUser) {
+	// 	var found = false;
+	// 	document.getElementById("userBox").innerHTML.slice(0, -1).split(",").forEach(function (a) {
+	// 		if (a == localUser) {
+	// 			found = true;
+	// 			window.location.replace("/game");
+	// 		}
+	// 	});
+	// 	if (!found) {
+	// 		localStorage.clear();
+	// 	}
+	// } else {
+	// 	document.getElementById("headerLogout").innerHTML = "";
+	// }
 }
 
 document.getElementById("headerLogout").addEventListener("click", function () {

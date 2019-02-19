@@ -13,7 +13,7 @@ app.use(favicon(__dirname + '/public/images/logo.png'));
 
 app.use(express.urlencoded());
 
-var methodOverride = requre('method-override');
+var methodOverride = require('method-override');
 
 app.use(require('./controllers/user'));
 

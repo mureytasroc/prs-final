@@ -15,7 +15,7 @@
 
     <h2>User Details <%if(locals.user){%><%-user.username%><%}%></h2>
     <br>
-      <form action="/users<%if(locals.user){%>/<%-user.username%><%}%>" method="<%if(locals.user){%>put<%}else{%>post<%}%>">
+      <form action="/users<%if(locals.user){%>/<%-user.username%>?_method=PUT<%}%>" method="<%if(locals.user){%>post<%}else{%>post<%}%>">
   First name:<br>
   <input type="text" name="fname" value="<%if(locals.user){%><%-user.fname%><%}%>" required><br>
   Last name:<br>
@@ -30,7 +30,7 @@
 </form>
       <%if(locals.user){%>
       <br>
-      <form action="/users/<%-user.username%>" method="delete">
+      <form action="/users/<%-user.username%>_method=DELETE" method="post">
           Danger zone:<br>
           <button type="submit">Delete account</button>
           </form>

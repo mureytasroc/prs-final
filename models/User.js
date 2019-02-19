@@ -1,41 +1,61 @@
 var fs = require("fs");
 
-exports.setUser=function(ob) { //updates user data
-	var a = exports.getUsers();
-	var username = ob["username"];
-	for (var i = 0; i < a.length; i++) {
-		if (username == a[i]["username"]) {
-			a[i] = ob;
-		}
-	}
-	exports.sendUsers(a);
-}
+var GoogleSpreadsheet = require('google-spreadsheet');
 
-exports.checkUsername=function(username, password) { //handles login
-	user_data = exports.getUsers();
-	for (var i = 0; i < user_data.length; i++) {
-		if (username == user_data[i]["username"]) {
-			if (password == user_data[i]["password"]) {
-				return "logged in";
-			} else {
-				return "Wrong user/password";
+var creds = require('./client_secret.json');
+
+var doc = new GoogleSpreadsheet('1AWi6mryVBu59Nx0Z9yszuou6xe9MetXxVZs1Om7FTps');
+
+
+exports.setUser=function(ob) { //updates user data
+	exports.getUsers(function(a){
+		var username = ob["name"];
+		for (var i = 0; i < a.length; i++) {
+			if (username == a[i]["name"]) {
+				a[i] = ob;
+				a[i].save();
 			}
 		}
-	}
-	return "Wrong user/password";
+	});
 }
 
-exports.checkNewUser=function(username, password, password2) { //checks whether new user is already taken
-    user_data = exports.getUsers();
-    for (var i = 0; i < user_data.length; i++) {
-        if (username == user_data[i]["username"]) {
-            return "User already taken";
-        }
-    }
-    if (password != password2) {
-        return "Passwords do not match";
-    }
-    return "Logged in";
+exports.deleteUser=function(username){
+	exports.getUsers(function(a){
+		for (var i = 0; i < a.length; i++) {
+			if (username == a[i]["name"]) {
+
+			}
+		}
+	});
+}
+
+exports.checkUsername=function(username, password, callback) { //handles login
+	exports.getUsers(function(user_data){
+		for (var i = 0; i < user_data.length; i++) {
+			if (username == user_data[i]["username"]) {
+				if (password == user_data[i]["password"]) {
+					callback("logged in");
+				} else {
+					callback("Wrong user/password");
+				}
+			}
+		}
+		callback("Wrong user/password");
+	});
+}
+
+exports.checkNewUser=function(username, password, password2, callback) { //checks whether new user is already taken
+		exports.getUsers(function(user_data){
+			for (var i = 0; i < user_data.length; i++) {
+	        if (username == user_data[i]["username"]) {
+	            callback("User already taken");
+	        }
+	    }
+	    if (password != password2) {
+	        callback("Passwords do not match");
+	    }
+	    callback("Logged in");
+		});
 }
 
 exports.createUser=function(username, password, fname, lname) { //creates new user
@@ -50,51 +70,43 @@ exports.createUser=function(username, password, fname, lname) { //creates new us
 	user_object["scissors"] = 0;
     user_object["fname"]=fname;
     user_object["lname"]=lname;
-	var a = exports.getUsers();
-	a.push(user_object);
-	exports.sendUsers(a);
-}
-
-exports.getUserByName=function(username) { //returns user object by username
-	var user_data = exports.getUsers();
-	for (var i = 0; i < user_data.length; i++) {
-		if (username == user_data[i]["username"]) {
-			return user_data[i];
+		exports.getUsers(function(a){
+			doc.addRow(1, a, function(err) {
+		if(err) {
+			console.log(err);
 		}
-	}
-	return null;
+		});
+		});
+
+
+
 }
 
-exports.getUsers=function() { //gets users data from users.csv
-	var user_data = [];
-	var user_file = fs.readFileSync("data/users.csv", "utf8");
-	var user_lines = user_file.split('\n');
-	for (var i = 1; i < user_lines.length; i++) {
-		var user_object = {};
-		var single_user = user_lines[i].trim().split(',');
-		user_object["username"] = single_user[0];
-		user_object["password"] = single_user[1];
-		user_object["games_played"] = single_user[2];
-		user_object["games_won"] = single_user[3];
-		user_object["games_lost"] = single_user[4];
-		user_object["paper"] = single_user[5];
-		user_object["rock"] = single_user[6];
-		user_object["scissors"] = single_user[7];
-        user_object["fname"] = single_user[8];
-        user_object["lname"] = single_user[9];
+exports.getUserByName=function(username, callback) { //returns user object by username
+	exports.getUsers(function(user_data){
+		for (var i = 0; i < user_data.length; i++) {
+			if (username == user_data[i]["name"]) {
+				callback(user_data[i]);
+			}
+		}
+	});
+}
 
-        user_object["points"]=user_object["games_won"]*3+user_object["games_played"]-user_object["games_won"]-user_object["games_lost"];
-		user_data.push(user_object);
-	}
-	return user_data;
+exports.getUsers=function(callback) { //gets users data from users.csv
+	getAllDatabaseRows(function(users){
+		callback(users);
+	});
 }
 
 exports.sendUsers=function(user_data) { //updates users.csv
-	var string = "username,password,games_played,games_won,games_lost,paper,rock,scissors,first name,last name";
-	for (var i = 0; i < user_data.length; i++) {
-		var a = ""
-		a += "\n" + user_data[i]["username"] + "," + user_data[i]["password"] + "," + user_data[i]["games_played"] + "," + user_data[i]["games_won"] + "," + user_data[i]["games_lost"] + "," + user_data[i]["paper"] + "," + user_data[i]["rock"] + "," + user_data[i]["scissors"]+ "," + user_data[i]["fname"]+ "," + user_data[i]["lname"];
-		string += a;
-	}
-	fs.writeFileSync("data/users.csv", string, "utf8");
+
+}
+
+var getAllDatabaseRows=function(callback){
+	doc.useServiceAccountAuth(creds, function (err) {
+	  doc.getRows(1, function (err, rows) {
+	    //console.log(rows);
+			callback(rows);
+	  });
+	});
 }

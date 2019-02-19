@@ -8,22 +8,22 @@ var GameLogic = require(__dirname +'/../util/game_logic');
 router.get('/user/:id', function(req, res){
   console.log('Request- /user/'+req.params.id);
 
-  var u = User.getUserByName(req.params.id);
-
-  res.status(200);
-  res.setHeader('Content-Type', 'text/html')
-  res.render('user_details', {user:u});
+  User.getUserByName(req.params.id,function(u){
+    res.status(200);
+    res.setHeader('Content-Type', 'text/html')
+    res.render('user_details', {user:u});
+  });
 });
 
 
 router.get('/user/new', function(req, res){
   console.log('Request- /user/'+req.params.id);
 
-  var u = User.getUserByName(req.params.id);
-
-  res.status(200);
-  res.setHeader('Content-Type', 'text/html')
-  res.render('user_details', {user:u});
+  User.getUserByName(req.params.id,function(u){
+    res.status(200);
+    res.setHeader('Content-Type', 'text/html')
+    res.render('user_details', {user:u});
+  });
 });
 
 
@@ -31,21 +31,21 @@ router.get('/user/new', function(req, res){
 router.get('/users/:id/edit', function(req, res){
   console.log('Request- /user/'+req.params.id);
 
-  var u = User.getUserByName(req.params.id);
-
-  res.status(200);
-  res.setHeader('Content-Type', 'text/html')
-  res.render('user_details', {user:u});
+  User.getUserByName(req.params.id,function(u){
+    res.status(200);
+    res.setHeader('Content-Type', 'text/html')
+    res.render('user_details', {user:u});
+  });
 });
 
 router.get('/users/game', function(req, res){
   console.log('Get- /user/'+req.params.id);
 
-  var u = User.getUserByName(req.params.id);
-
-  res.status(200);
-  res.setHeader('Content-Type', 'text/html')
-  res.render('user_details', {user:u});
+  User.getUserByName(req.params.id,function(u){
+    res.status(200);
+    res.setHeader('Content-Type', 'text/html')
+    res.render('user_details', {user:u});
+  });
 });
 
 
@@ -74,21 +74,21 @@ router.get('/user/:id/results', function (request, response) {
 router.put('/users/:id', function(req, res){
   console.log('Put- /user/'+req.params.id);
 
-  var u = User.getUserByName(req.params.id);
-
-  res.status(200);
-  res.setHeader('Content-Type', 'text/html')
-  res.render('user_details', {user:u});
+  User.getUserByName(req.params.id, function(u){
+    res.status(200);
+    res.setHeader('Content-Type', 'text/html')
+    res.render('user_details', {user:u});
+  });
 });
 
 router.delete('/users/:id', function(req, res){
   console.log('Delete- /user/'+req.params.id);
 
-  var u = User.getUserByName(req.params.id);
-
-  res.status(200);
-  res.setHeader('Content-Type', 'text/html')
-  res.render('user_details', {user:u});
+  User.getUserByName(req.params.id,function(u){
+    res.status(200);
+    res.setHeader('Content-Type', 'text/html')
+    res.render('user_details', {user:u});
+  });
 });
 
 
@@ -106,10 +106,6 @@ router.post('/users', function(req, res){
 
   console.log(response);
 
-  var users = User.getUsers().map(function (a) {
-		return a["username"];
-	});
-
   console.log("in post route method");
 
   if ((response == "User already taken") || (response == "Passwords do not match")) { //if new user isn't valid
@@ -118,10 +114,11 @@ router.post('/users', function(req, res){
     res.render('user_details', {new:user_data}); //lets login page show error message by sendinb back user information with result information
   } else { //if new user is valid
     User.createUser(req.body.id, req.body.password, req.body.fname, req.body.lname); //creates new user
-    var u = User.getUserByName(req.params.id); //creates object of new user
-    res.status(200);
-    res.setHeader('Content-Type', 'text/html')
-    res.render('index', {user:u, users:users}); //sends you to index with your logged in user information.
+    User.getUserByName(req.params.id,function(u){
+      res.status(200);
+      res.setHeader('Content-Type', 'text/html')
+      res.render('index', {user:u, users:users}); //sends you to index with your logged in user information.
+    }); //creates object of new user
   }
 });
 
@@ -130,29 +127,28 @@ router.post('/users', function(req, res){
 
 
 router.get('/login', function (request, response) {
-	var res = User.checkUsername(request.query.player_name, request.query.player_password);
-	var user_data = {
-		username: request.query.player_name,
-		password: request.query.player_password,
-		result: res
-	};
-	if (res != "Wrong user/password") {
-		response.status(200);
-		response.setHeader('Content-Type', 'text/html')
-		response.render('game', {
-			user: user_data
-		});
-	} else {
-		var users = User.getUsers().map(function (a) {
-			return a["username"];
-		});
-		response.status(200);
-		response.setHeader('Content-Type', 'text/html')
-		response.render('index', {
-			user: user_data,
-			users: users
-		}); //lets login page show error message
-	}
+	User.checkUsername(request.query.player_name, request.query.player_password,function(res){
+    var user_data = {
+      username: request.query.player_name,
+      password: request.query.player_password,
+      result: res
+    };
+    if (res != "Wrong user/password") {
+      response.status(200);
+      response.setHeader('Content-Type', 'text/html')
+      response.render('game', {
+        user: user_data
+      });
+    } else {
+      User.getUsers(function(u){
+        response.status(200);
+        response.setHeader('Content-Type', 'text/html')
+        response.render('index', {
+          user: user_data,users:users
+        }); //lets login page show error message
+      });
+    }
+  });
 });
 
 

@@ -133,6 +133,7 @@ router.get('/login', function (request, response) {
       password: request.query.player_password,
       result: res
     };
+    console.log(res);
     if (res != "Wrong user/password") {
       response.status(200);
       response.setHeader('Content-Type', 'text/html')
@@ -140,7 +141,7 @@ router.get('/login', function (request, response) {
         user: user_data
       });
     } else {
-      User.getUsers(function(u){
+      User.getUsers(function(users){
         response.status(200);
         response.setHeader('Content-Type', 'text/html')
         response.render('index', {

@@ -4,32 +4,24 @@ var GoogleSpreadsheet = require('google-spreadsheet');
 
 var creds = require('./client_secret.json');
 
+
+
+// Create a document object using the ID of the spreadsheet - obtained from its URL.
+
 var doc = new GoogleSpreadsheet('1AWi6mryVBu59Nx0Z9yszuou6xe9MetXxVZs1Om7FTps');
 
-
 exports.setUser=function(ob) { //updates user data
-	exports.getUsers(function(a){
-		var username = ob["name"];
-		for (var i = 0; i < a.length; i++) {
-			if (username == a[i]["name"]) {
-				a[i] = ob;
-				a[i].save();
-			}
+	var a = exports.getUsers();
+	var username = ob["username"];
+	for (var i = 0; i < a.length; i++) {
+		if (username == a[i]["username"]) {
+			a[i] = ob;
 		}
-	});
+	}
+	exports.sendUsers(a);
 }
 
-exports.deleteUser=function(username){
-	exports.getUsers(function(a){
-		for (var i = 0; i < a.length; i++) {
-			if (username == a[i]["name"]) {
-
-			}
-		}
-	});
-}
-
-exports.checkUsername=function(username, password, callback) { //handles login
+exports.checkUsername=function(username, password,callback){ //handles login
 	exports.getUsers(function(user_data){
 		for (var i = 0; i < user_data.length; i++) {
 			if (username == user_data[i]["username"]) {
@@ -44,18 +36,17 @@ exports.checkUsername=function(username, password, callback) { //handles login
 	});
 }
 
-exports.checkNewUser=function(username, password, password2, callback) { //checks whether new user is already taken
-		exports.getUsers(function(user_data){
-			for (var i = 0; i < user_data.length; i++) {
-	        if (username == user_data[i]["username"]) {
-	            callback("User already taken");
-	        }
-	    }
-	    if (password != password2) {
-	        callback("Passwords do not match");
-	    }
-	    callback("Logged in");
-		});
+exports.checkNewUser=function(username, password, password2) { //checks whether new user is already taken
+    user_data = exports.getUsers();
+    for (var i = 0; i < user_data.length; i++) {
+        if (username == user_data[i]["username"]) {
+            return "User already taken";
+        }
+    }
+    if (password != password2) {
+        return "Passwords do not match";
+    }
+    return "Logged in";
 }
 
 exports.createUser=function(username, password, fname, lname) { //creates new user
@@ -70,43 +61,41 @@ exports.createUser=function(username, password, fname, lname) { //creates new us
 	user_object["scissors"] = 0;
     user_object["fname"]=fname;
     user_object["lname"]=lname;
-		exports.getUsers(function(a){
-			doc.addRow(1, a, function(err) {
-		if(err) {
-			console.log(err);
-		}
-		});
-		});
-
-
-
+	var a = exports.getUsers();
+	a.push(user_object);
+	exports.sendUsers(a);
 }
 
 exports.getUserByName=function(username, callback) { //returns user object by username
+
 	exports.getUsers(function(user_data){
+
 		for (var i = 0; i < user_data.length; i++) {
 			if (username == user_data[i]["name"]) {
-				callback(user_data[i]);
+				callback(user_data[i]["name"]);
 			}
 		}
+		callback(null);
 	});
 }
 
 exports.getUsers=function(callback) { //gets users data from users.csv
-	getAllDatabaseRows(function(users){
-		callback(users);
+
+	doc.useServiceAccountAuth(creds, function (err) {
+	  doc.getRows(1, function (err, rows) {
+	    callback(rows);
+
+	  });
+
 	});
 }
 
 exports.sendUsers=function(user_data) { //updates users.csv
-
-}
-
-var getAllDatabaseRows=function(callback){
-	doc.useServiceAccountAuth(creds, function (err) {
-	  doc.getRows(1, function (err, rows) {
-	    //console.log(rows);
-			callback(rows);
-	  });
-	});
+	var string = "username,password,games_played,games_won,games_lost,paper,rock,scissors,first name,last name";
+	for (var i = 0; i < user_data.length; i++) {
+		var a = ""
+		a += "\n" + user_data[i]["username"] + "," + user_data[i]["password"] + "," + user_data[i]["games_played"] + "," + user_data[i]["games_won"] + "," + user_data[i]["games_lost"] + "," + user_data[i]["paper"] + "," + user_data[i]["rock"] + "," + user_data[i]["scissors"]+ "," + user_data[i]["fname"]+ "," + user_data[i]["lname"];
+		string += a;
+	}
+	fs.writeFileSync("data/users.csv", string, "utf8");
 }

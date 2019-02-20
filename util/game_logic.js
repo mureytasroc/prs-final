@@ -48,11 +48,12 @@ exports.tied = function(username, browsC, throwC, villain) { //handles ties
 }
 
 exports.won = function(username, browsC, throwC, villain) { //handles wins
-	var userObject = User.getUserByName(username);
-	userObject[throwC]++;
-	userObject["games_played"]++;
-	userObject["games_won"]++;
-	User.setUser(userObject);
+	User.getUserByName(username,function(userObject){
+        userObject[throwC]++;
+	   userObject["games_played"]++;
+	   userObject["games_won"]++;
+	   User.setUser(userObject);
+    });
 
 	var villainObject = Villain.getVillainByName(villain);
 	villainObject[browsC]++;

@@ -33,10 +33,14 @@ var GameLogic = require(__dirname +'/util/game_logic');
 
 app.get('/', function (request, response) {
 User.getUsers(function(users){
+    var us=users.map(function(a){
+            return a["name"];
+        });
+    console.log(us);
 	response.status(200);
 	response.setHeader('Content-Type', 'text/html')
 	response.render('index', {
-		users:users
+		users:us
 	});
 });
 });

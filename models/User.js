@@ -23,11 +23,10 @@ exports.setUser=function(ob) { //updates user data
 
 exports.checkUsername=function(username, password,callback){ //handles login
 	exports.getUsers(function(user_data){
-        console.log("user_data");
-        console.log(user_data);
+        var found=false;
 		for (var i = 0; i < user_data.length; i++) {
 			if (username == user_data[i]["name"]) {
-                console.log(user_data[i]["password"]);
+                found=true;
 				if (password == user_data[i]["password"]) {
 					callback("logged in");
 				} else {
@@ -35,7 +34,10 @@ exports.checkUsername=function(username, password,callback){ //handles login
 				}
 			}
 		}
-		callback("Wrong user/password");
+        if(!found){
+            callback("Wrong user/password");
+        }
+		
 	});
 }
 

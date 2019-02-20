@@ -40,7 +40,17 @@ exports.browserOutcome=function(villain, weapon) { //decides browser choice
 }
 
 exports.getVillains=function() { //gets villains data from villains.csv
-	var villain_data = [];
+	
+    doc.useServiceAccountAuth(creds, function (err) {
+	  doc.getRows(1, function (err, rows) {
+	    callback(rows);
+
+	  });
+
+	});
+    
+    
+    var villain_data = [];
 	var villain_file = fs.readFileSync("data/villains.csv", "utf8");
 	var villain_lines = villain_file.split('\n');
 	for (var i = 1; i < villain_lines.length; i++) {

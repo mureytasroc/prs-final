@@ -95,6 +95,15 @@ exports.getUsers=function(callback) { //gets users data from users.csv
 	});
 }
 
+exports.getUsernames=function(callback) {
+    exports.getUsers(function(user_data){
+    var us=users.map(function(a){
+            return a["name"];
+        });
+        callback(us);
+    }
+}
+
 exports.sendUsers=function(user_data) { //updates users.csv
 	var string = "username,password,games_played,games_won,games_lost,paper,rock,scissors,first name,last name";
 	for (var i = 0; i < user_data.length; i++) {

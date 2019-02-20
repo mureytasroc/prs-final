@@ -12,9 +12,9 @@ var doc = new GoogleSpreadsheet('1AWi6mryVBu59Nx0Z9yszuou6xe9MetXxVZs1Om7FTps');
 
 exports.setUser=function(ob) { //updates user data
 	var a = exports.getUsers();
-	var username = ob["username"];
+	var username = ob["name"];
 	for (var i = 0; i < a.length; i++) {
-		if (username == a[i]["username"]) {
+		if (username == a[i]["name"]) {
 			a[i] = ob;
 		}
 	}
@@ -23,8 +23,11 @@ exports.setUser=function(ob) { //updates user data
 
 exports.checkUsername=function(username, password,callback){ //handles login
 	exports.getUsers(function(user_data){
+        console.log("user_data");
+        console.log(user_data);
 		for (var i = 0; i < user_data.length; i++) {
-			if (username == user_data[i]["username"]) {
+			if (username == user_data[i]["name"]) {
+                console.log(user_data[i]["password"]);
 				if (password == user_data[i]["password"]) {
 					callback("logged in");
 				} else {
@@ -39,7 +42,7 @@ exports.checkUsername=function(username, password,callback){ //handles login
 exports.checkNewUser=function(username, password, password2) { //checks whether new user is already taken
     user_data = exports.getUsers();
     for (var i = 0; i < user_data.length; i++) {
-        if (username == user_data[i]["username"]) {
+        if (username == user_data[i]["name"]) {
             return "User already taken";
         }
     }
@@ -51,7 +54,7 @@ exports.checkNewUser=function(username, password, password2) { //checks whether 
 
 exports.createUser=function(username, password, fname, lname) { //creates new user
 	var user_object = new Object();
-	user_object["username"] = username;
+	user_object["name"] = username;
 	user_object["password"] = password;
 	user_object["games_played"] = 0;
 	user_object["games_won"] = 0;
@@ -94,7 +97,7 @@ exports.sendUsers=function(user_data) { //updates users.csv
 	var string = "username,password,games_played,games_won,games_lost,paper,rock,scissors,first name,last name";
 	for (var i = 0; i < user_data.length; i++) {
 		var a = ""
-		a += "\n" + user_data[i]["username"] + "," + user_data[i]["password"] + "," + user_data[i]["games_played"] + "," + user_data[i]["games_won"] + "," + user_data[i]["games_lost"] + "," + user_data[i]["paper"] + "," + user_data[i]["rock"] + "," + user_data[i]["scissors"]+ "," + user_data[i]["fname"]+ "," + user_data[i]["lname"];
+		a += "\n" + user_data[i]["name"] + "," + user_data[i]["password"] + "," + user_data[i]["games_played"] + "," + user_data[i]["games_won"] + "," + user_data[i]["games_lost"] + "," + user_data[i]["paper"] + "," + user_data[i]["rock"] + "," + user_data[i]["scissors"]+ "," + user_data[i]["fname"]+ "," + user_data[i]["lname"];
 		string += a;
 	}
 	fs.writeFileSync("data/users.csv", string, "utf8");

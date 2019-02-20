@@ -33,7 +33,6 @@ var GameLogic = require(__dirname +'/util/game_logic');
 
 app.get('/', function (request, response) {
 User.getUsers(function(users){
-		console.log(users);
 	response.status(200);
 	response.setHeader('Content-Type', 'text/html')
 	response.render('index', {

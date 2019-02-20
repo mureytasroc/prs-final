@@ -97,14 +97,10 @@ router.delete('/users/:id', function(req, res){
 
 router.post('/users', function(req, res){
   console.log('Post- /user/'+req.params.id); //logs stuff to console
-  console.log(req.query);
-  console.log(req.body);
   response = User.checkNewUser(req.body.id, req.body.password, req.body.password2); //gives response on whether this is a proper new user
   var user_data = {
     result: response
   };
-
-  console.log(response);
 
   console.log("in post route method");
 
@@ -133,7 +129,7 @@ router.get('/login', function (request, response) {
       password: request.query.player_password,
       result: res
     };
-    console.log(res);
+        //console.log(res);
     if (res != "Wrong user/password") {
       response.status(200);
       response.setHeader('Content-Type', 'text/html')

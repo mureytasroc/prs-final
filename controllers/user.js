@@ -74,6 +74,13 @@ router.get('/user/:id/results', function (request, response) {
 router.put('/users/:id', function(req, res){
   console.log('Put- /user/'+req.params.id);
 
+
+  //use req.body.id
+
+  User.setUser();
+
+  //use call back stuff
+
   User.getUserByName(req.params.id, function(u){
     res.status(200);
     res.setHeader('Content-Type', 'text/html')
@@ -82,13 +89,15 @@ router.put('/users/:id', function(req, res){
 });
 
 router.delete('/users/:id', function(req, res){
-  console.log('Delete- /user/'+req.params.id);
+   console.log('Delete- /user/'+req.params.id);
 
-  User.getUserByName(req.params.id,function(u){
-    res.status(200);
-    res.setHeader('Content-Type', 'text/html')
-    res.render('user_details', {user:u});
-  });
+   User.deleteUser(req.params.id); //need to make a deleteUser function
+
+   User.getUsernames(function(u){
+      res.status(200);
+      res.setHeader('Content-Type', 'text/html')
+      res.render('index', {users:u});
+   });
 });
 
 

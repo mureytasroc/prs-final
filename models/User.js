@@ -8,8 +8,16 @@ var creds = require('./client_secret.json');
 
 var doc = new GoogleSpreadsheet('1AWi6mryVBu59Nx0Z9yszuou6xe9MetXxVZs1Om7FTps');
 
-exports.setUser=function(ob) { //updates user data
-    
+exports.setUser=function(name, ob) { //updates user data
+    	exports.getUsers(function(a){
+	for (var i = 0; i < a.length; i++) {
+		if (name == a[i]["name"]) {
+			a[i] = ob;
+            a[i]["lastupdate"]=Date();
+            a[i].save();
+		}
+	}
+                        });
 
 }
 
@@ -75,6 +83,8 @@ exports.createUser=function(username, password, fname, lname, callback) { //crea
 	user_object["scissors"] = 0;
     user_object["firstname"]=fname;
     user_object["lastname"]=lname;
+    user_object["creationdate"]=Date();
+    user_object["lastupdate"]=Date();
     doc.useServiceAccountAuth(creds, function (err) {
         doc.addRow(1, user_object, callback);
     });

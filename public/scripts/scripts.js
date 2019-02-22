@@ -1,5 +1,13 @@
 var localUser = localStorage.getItem("currentUser");
 
+if(document.title=="P,R,S - User Details"){
+    var up=document.getElementById("updatedUser");
+    if(up.innerHTML!=""){
+        localStorage.setItem("currentUser", up.innerHTML);
+        var localUser = localStorage.getItem("currentUser");
+    }
+}
+
 if (document.title == "P,R,S - Game") {
 	 var userBox = document.getElementById("userBox").innerHTML;
 	 if (!localUser && userBox != "") {
@@ -19,6 +27,28 @@ if (document.title == "P,R,S - Game") {
 	});
 }
 
+if (document.title == "P,R,S - Index") { //handles login checking and redirection
+    if (localUser) {
+	 	var found = false;
+	 	document.getElementById("userBox").innerHTML.slice(0, -1).split(",").forEach(function (a) {
+	 		if (a == localUser) {
+	 			found = true;
+	 			window.location.replace("/game");
+	 		}
+	 	});
+	 	if (!found) {
+            document.getElementById("headerLogout").innerHTML = "";
+	 		localStorage.clear();
+            localUser = localStorage.getItem("currentUser");
+	 	}
+	 } else {
+	 	document.getElementById("headerLogout").innerHTML = "";
+	 }
+}
+
+console.log("test");
+console.log(localUser);
+
 if (localUser) { //if user is already logged in
     document.getElementById("headerDivider").innerHTML="|";
 	document.getElementById("headerLogout").innerHTML = "Log Out";
@@ -32,26 +62,11 @@ if (localUser) { //if user is already logged in
 	document.getElementById("statsLink").href = "/stats?username=" + localUser;
 
 } else {
-	document.getElementById("headerLogout").innerHTML = "Log In";
+    if(document.title != "P,R,S - Index"){
+	document.getElementById("headerLogout").innerHTML = "Log In";}
 	document.getElementById("headerLogout").href = "/";
-}
-
-if (document.title == "P,R,S - Index") { //handles login checking and redirection
-    if (localUser) {
-	 	var found = false;
-	 	document.getElementById("userBox").innerHTML.slice(0, -1).split(",").forEach(function (a) {
-	 		if (a == localUser) {
-	 			found = true;
-	 			window.location.replace("/game");
-	 		}
-	 	});
-	 	if (!found) {
-            document.getElementById("headerLogout").innerHTML = "";
-	 		localStorage.clear();
-	 	}
-	 } else {
-	 	document.getElementById("headerLogout").innerHTML = "";
-	 }
+    document.getElementById("headerGreeter").innerHTML="";
+    document.getElementById("headerEdit").innerHTML ="";
 }
 
 document.getElementById("headerLogout").addEventListener("click", function () {

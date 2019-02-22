@@ -47,11 +47,11 @@ exports.findResult = function(username, brows, user, villain, callback) { //upda
 exports.tied = function(username, browsC, throwC, villain, callback) { //handles ties
 	User.getUserByName(username,function(userObject){
            userObject[throwC]++;
-	       userObject["games_played"]++;
+	       userObject["gamesplayed"]=parseInt(userObject["gamesplayed"])+1;
 	       User.setUser(userObject);
             Villain.getVillainByName(villain,function(villainObject){
                 	villainObject[browsC]++;
-	villainObject["games_played"]++;
+	villainObject["gamesplayed"]=parseInt(villainObject["gamesplayed"])+1;
 	Villain.setVillain(villainObject);
                 callback();
             });
@@ -66,13 +66,13 @@ exports.won = function(username, browsC, throwC, villain, callback) { //handles 
             
             
            userObject[throwC]++;
-	   userObject["games_played"]++;
-	   userObject["games_won"]++;
+	   userObject["gamesplayed"]=parseInt(userObject["gamesplayed"])+1;
+	   userObject["gameswon"]=parseInt(userObject["gameswon"])+1;
 	       User.setUser(userObject);
             Villain.getVillainByName(villain,function(villainObject){
                 	villainObject[browsC]++;
-	villainObject["games_played"]++;
-	villainObject["games_lost"]++;
+	villainObject["gamesplayed"]=parseInt(villainObject["gamesplayed"])+1;
+	villainObject["gameslost"]=parseInt(villainObject["gameslost"])+1;
 	Villain.setVillain(villainObject);
                 callback();
             });
@@ -85,13 +85,13 @@ exports.lost = function(username, browsC, throwC, villain, callback) { //handles
 
         	User.getUserByName(username,function(userObject){
            userObject[throwC]++;
-	userObject["games_played"]++;
-	userObject["games_lost"]++;
+	userObject["gamesplayed"]=parseInt(userObject["gamesplayed"])+1;
+	userObject["gameslost"]=parseInt(userObject["gameslost"])+1;
 	       User.setUser(userObject);
             Villain.getVillainByName(villain,function(villainObject){
                 	villainObject[browsC]++;
-	villainObject["games_played"]++;
-	villainObject["games_won"]++;
+	villainObject["gamesplayed"]=parseInt(villainObject["gamesplayed"])+1;
+	villainObject["gameswon"]=parseInt(villainObject["gameswon"])+1;
 	Villain.setVillain(villainObject);
                 callback();
             });

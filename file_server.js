@@ -9,6 +9,8 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.use(favicon(__dirname + '/public/images/logo.png'));
 
+var Admin=require(__dirname+'/models/Admin');
+
 
 
 app.use(express.urlencoded());
@@ -34,6 +36,16 @@ var GameLogic = require(__dirname +'/util/game_logic');
 //////////////////////////////////////////////////////////////////////////////////////
 
 app.get('/', function (request, response) {
+    
+                          var log={
+        'timestamp':Date(),
+        'httpverb':"GET",
+        'username':"",
+        'route':"/"
+    }
+    Admin.logData(log);
+  console.log(log);
+    
 User.getUsernames(function(users){
 	response.status(200);
 	response.setHeader('Content-Type', 'text/html')
@@ -44,30 +56,81 @@ User.getUsernames(function(users){
 });
 
 app.get('/rules', function (request, response) {
+    
+    var log={
+        'timestamp':Date(),
+        'httpverb':"GET",
+        'username':"",
+        'route':"/rules"
+    }
+    Admin.logData(log);
+  console.log(log);
+    
 	response.status(200);
 	response.setHeader('Content-Type', 'text/html')
 	response.render('rules');
 });
 
 app.get('/about', function (request, response) {
+    
+        var log={
+        'timestamp':Date(),
+        'httpverb':"GET",
+        'username':"",
+        'route':"/about"}
+        
+    Admin.logData(log);
+  console.log(log);
+    
 	response.status(200);
 	response.setHeader('Content-Type', 'text/html')
 	response.render('about');
 });
 
 app.get('/game', function (request, response) {
+    
+    var log={
+        'timestamp':Date(),
+        'httpverb':"GET",
+        'username':"",
+        'route':"/game"
+    }
+    Admin.logData(log);
+  console.log(log);
+    
 	response.status(200);
 	response.setHeader('Content-Type', 'text/html')
 	response.render('game');
 });
 
 app.get('/contact', function (request, response) {
+    
+        var log={
+        'timestamp':Date(),
+        'httpverb':"GET",
+        'username':"",
+        'route':"/contact"
+    }
+    Admin.logData(log);
+  console.log(log);
+    
+    
 	response.status(200);
 	response.setHeader('Content-Type', 'text/html')
 	response.render('contact');
 });
 
 app.get('/stats', function (request, response) {
+    
+            var log={
+        'timestamp':Date(),
+        'httpverb':"GET",
+        'username':"",
+        'route':"/stats"
+    }
+    Admin.logData(log);
+  console.log(log);
+    
 	User.getUsers(function(userD){
         Villain.getVillains(function(villains_lines){
             

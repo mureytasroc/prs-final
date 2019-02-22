@@ -40,6 +40,8 @@
           <button type="submit">Delete account</button>
           </form>
       <%}%>
+      <span id="updatedUser" class="hidden"><%if(locals.updatedUser){%><%-updatedUser%><%}%></span>
+      
     <br>
   </div>
   <% include global/footer %>

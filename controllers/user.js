@@ -52,8 +52,8 @@ router.get('/users/game', function(req, res){
 router.get('/user/:id/results', function (request, response) {
 	var villain = request.query.villain;
 	var browserChoice = Villain.browserOutcome(villain, request.query.weapon);
-	var outcome = GameLogic.findResult(request.params.id, browserChoice, request.query.weapon, villain);
-	var result = {
+	GameLogic.findResult(request.params.id, browserChoice, request.query.weapon, villain,function(outcome){
+        	var result = {
 		name: request.params.id,
 		weapon: request.query.weapon,
 		browserChoice: browserChoice,
@@ -66,6 +66,7 @@ router.get('/user/:id/results', function (request, response) {
 		username: request.params.id,
 		results: result
 	});
+    });
 });
 
 
@@ -76,15 +77,30 @@ router.put('/users/:id', function(req, res){
 
 
   //use req.body.id
+    
+    
 
-  User.setUser();
 
   //use call back stuff
 
   User.getUserByName(req.params.id, function(u){
+      if(req.body.password==req.body.password2){
+                u['name']=req.body.id;
+      u['firstname']=req.body.fname;
+      u['lastname']=req.body.lname;
+      u['password']=req.body.password;
+        User.setUser(u);
+          u['response']="<p class='green'>User details updated.</p>"
     res.status(200);
     res.setHeader('Content-Type', 'text/html')
     res.render('user_details', {user:u});
+      }
+      else{
+          u['response']="<p class='red'>Entered passwords did not match.</p>";
+              res.status(200);
+    res.setHeader('Content-Type', 'text/html')
+    res.render('user_details', {user:u});
+      }
   });
 });
 
@@ -93,7 +109,7 @@ router.delete('/users/:id', function(req, res){
 
    User.deleteUser(req.params.id); //need to make a deleteUser function
 
-   User.getUsernames(function(u){
+   User.getUsers(function(u){
       res.status(200);
       res.setHeader('Content-Type', 'text/html')
       res.render('index', {users:u});
@@ -105,26 +121,23 @@ router.delete('/users/:id', function(req, res){
 
 
 router.post('/users', function(req, res){
-  console.log('Post- /user/'+req.params.id); //logs stuff to console
-  response = User.checkNewUser(req.body.id, req.body.password, req.body.password2); //gives response on whether this is a proper new user
-  var user_data = {
-    result: response
-  };
-
-  console.log("in post route method");
+  console.log('Post- /users'); //logs stuff to console
+  User.checkNewUser(req.body.id, req.body.password, req.body.password2, function(response){
 
   if ((response == "User already taken") || (response == "Passwords do not match")) { //if new user isn't valid
-    res.status(200);
+      res.status(200);
     res.setHeader('Content-Type', 'text/html')
-    res.render('user_details', {new:user_data}); //lets login page show error message by sendinb back user information with result information
+    res.render('user_details', {response2:response}); //lets login page show error message by sendinb back user information with result information
   } else { //if new user is valid
-    User.createUser(req.body.id, req.body.password, req.body.fname, req.body.lname); //creates new user
-    User.getUserByName(req.params.id,function(u){
+    User.createUser(req.body.id, req.body.password, req.body.fname, req.body.lname,function(){
+        User.getUsernames(function(users){
       res.status(200);
       res.setHeader('Content-Type', 'text/html')
-      res.render('index', {user:u, users:users}); //sends you to index with your logged in user information.
+      res.render('index', {newuser:req.body.id,users:users}); //sends you to index
+    }); //creates new user
     }); //creates object of new user
   }
+  }); //gives response on whether this is a proper new user
 });
 
 
@@ -138,7 +151,6 @@ router.get('/login', function (request, response) {
       password: request.query.player_password,
       result: res
     };
-        console.log(res);
     if (res != "Wrong user/password") {
       response.status(200);
       response.setHeader('Content-Type', 'text/html')

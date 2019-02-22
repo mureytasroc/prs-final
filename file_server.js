@@ -14,6 +14,8 @@ app.use(favicon(__dirname + '/public/images/logo.png'));
 app.use(express.urlencoded());
 
 var methodOverride = require('method-override');
+app.use(methodOverride('_method'));
+
 
 app.use(require('./controllers/user'));
 
@@ -33,7 +35,6 @@ var GameLogic = require(__dirname +'/util/game_logic');
 
 app.get('/', function (request, response) {
 User.getUsernames(function(users){
-    console.log(us);
 	response.status(200);
 	response.setHeader('Content-Type', 'text/html')
 	response.render('index', {
@@ -67,8 +68,12 @@ app.get('/contact', function (request, response) {
 });
 
 app.get('/stats', function (request, response) {
-    var villains_lines = Villain.getVillains();
-	var user_data = User.getUsers().concat(villains_lines); //gets/combines users/villains
+	User.getUsers(function(userD){
+        Villain.getVillains(function(villains_lines){
+            
+            //console.log(userD);
+            
+            var user_data=userD.concat(villains_lines); //gets/combines users/villains
 
 	user_data = user_data.sort(function (a, b) { //sorts users according to points in descending order
 		return b["points"] - a["points"];
@@ -111,7 +116,7 @@ app.get('/stats', function (request, response) {
 		} else {
 			playerType = "User";
 		}
-		tableText += "<td>" + user_data[i]["name"] + "</td>" + "<td>" + user_data[i]['rank'] + "</td>" + "<td>" + playerType + "</td>" + "<td>" + user_data[i]['games_played'] + "</td>" + "<td>" + user_data[i]['games_won'] + "</td>" + "<td>" + user_data[i]['games_lost'] + "</td>" + "<td>" + (user_data[i]['games_played'] - user_data[i]['games_won'] - user_data[i]['games_lost']).toString() + "</td>" + "<td>" + user_data[i]['paper'] + "</td>" + "<td>" + user_data[i]['rock'] + "</td>" + "<td>" + user_data[i]['scissors'] + "</td>" + "<td>" + user_data[i]['points'] + "</td>" + "<td>" + villainStrategy + "</td>" + "</tr>";
+		tableText += "<td>" + user_data[i]["name"] + "</td>" + "<td>" + user_data[i]['rank'] + "</td>" + "<td>" + playerType + "</td>" + "<td>" + user_data[i]['gamesplayed'] + "</td>" + "<td>" + user_data[i]['gameswon'] + "</td>" + "<td>" + user_data[i]['gameslost'] + "</td>" + "<td>" + (user_data[i]['gamesplayed'] - user_data[i]['gameswon'] - user_data[i]['gameslost']).toString() + "</td>" + "<td>" + user_data[i]['paper'] + "</td>" + "<td>" + user_data[i]['rock'] + "</td>" + "<td>" + user_data[i]['scissors'] + "</td>" + "<td>" + user_data[i]['points'] + "</td>" + "<td>" + villainStrategy + "</td>" + "</tr>";
 	}
 
 	response.status(200);
@@ -119,4 +124,8 @@ app.get('/stats', function (request, response) {
 	response.render('stats', {
 		tableText: tableText
 	});
+        });
+        
+    })
+        
 });

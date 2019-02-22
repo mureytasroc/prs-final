@@ -1,5 +1,3 @@
-var fs = require("fs");
-
 var GoogleSpreadsheet = require('google-spreadsheet');
 
 var creds = require('./client_secret.json');
@@ -11,14 +9,18 @@ var creds = require('./client_secret.json');
 var doc = new GoogleSpreadsheet('1AWi6mryVBu59Nx0Z9yszuou6xe9MetXxVZs1Om7FTps');
 
 exports.setUser=function(ob) { //updates user data
-	var a = exports.getUsers();
-	var username = ob["name"];
+    
+
+}
+
+exports.deleteUser=function(name){
+	exports.getUsers(function(a){
 	for (var i = 0; i < a.length; i++) {
-		if (username == a[i]["name"]) {
-			a[i] = ob;
+		if (name == a[i]["name"]) {
+            a[i].del();
 		}
 	}
-	exports.sendUsers(a);
+    });
 }
 
 exports.checkUsername=function(username, password,callback){ //handles login
@@ -41,46 +43,56 @@ exports.checkUsername=function(username, password,callback){ //handles login
 	});
 }
 
-exports.checkNewUser=function(username, password, password2) { //checks whether new user is already taken
-    user_data = exports.getUsers();
-    for (var i = 0; i < user_data.length; i++) {
+exports.checkNewUser=function(username, password, password2, callback) { //checks whether new user is already taken
+    exports.getUsers(function(user_data){
+        var found=false;
+         for (var i = 0; i < user_data.length; i++) {
         if (username == user_data[i]["name"]) {
-            return "User already taken";
+            found=true;
+            callback("User already taken");
         }
     }
-    if (password != password2) {
-        return "Passwords do not match";
+        if (!found){
+            if(password != password2) {
+        callback("Passwords do not match");
     }
-    return "Logged in";
+    else{
+      callback("Logged in");  
+    }
+        }
+    });
 }
 
-exports.createUser=function(username, password, fname, lname) { //creates new user
-	var user_object = new Object();
+exports.createUser=function(username, password, fname, lname, callback) { //creates new user
+	    var user_object = new Object();
 	user_object["name"] = username;
 	user_object["password"] = password;
-	user_object["games_played"] = 0;
-	user_object["games_won"] = 0;
-	user_object["games_lost"] = 0;
+	user_object["gamesplayed"] = 0;
+	user_object["gameswon"] = 0;
+	user_object["gameslost"] = 0;
 	user_object["paper"] = 0;
 	user_object["rock"] = 0;
 	user_object["scissors"] = 0;
-    user_object["fname"]=fname;
-    user_object["lname"]=lname;
-	var a = exports.getUsers();
-	a.push(user_object);
-	exports.sendUsers(a);
+    user_object["firstname"]=fname;
+    user_object["lastname"]=lname;
+    doc.useServiceAccountAuth(creds, function (err) {
+        doc.addRow(1, user_object, callback);
+    });
 }
 
 exports.getUserByName=function(username, callback) { //returns user object by username
 
 	exports.getUsers(function(user_data){
-
+            var found=false;
 		for (var i = 0; i < user_data.length; i++) {
 			if (username == user_data[i]["name"]) {
-				callback(user_data[i]["name"]);
+                found=true;
+				callback(user_data[i]);
 			}
 		}
-		callback(null);
+        if(!found){
+            console.log("User.js line 89");
+		callback(null);}
 	});
 }
 
@@ -88,6 +100,9 @@ exports.getUsers=function(callback) { //gets users data from users.csv
 
 	doc.useServiceAccountAuth(creds, function (err) {
 	  doc.getRows(1, function (err, rows) {
+          rows.map(function(el){
+                  return el['points']=el["gameswon"]*3+(el["gamesplayed"]-el["gameswon"] -el["gameslost"]);
+          });
 	    callback(rows);
 
 	  });
@@ -97,14 +112,13 @@ exports.getUsers=function(callback) { //gets users data from users.csv
 
 exports.getUsernames=function(callback) {
     exports.getUsers(function(user_data){
-    var us=users.map(function(a){
+    callback(user_data.map(function(a){
             return a["name"];
-        });
-        callback(us);
-    }
+        }));
+    });
 }
 
-exports.sendUsers=function(user_data) { //updates users.csv
+/*exports.sendUsers=function(user_data) { //updates users.csv
 	var string = "username,password,games_played,games_won,games_lost,paper,rock,scissors,first name,last name";
 	for (var i = 0; i < user_data.length; i++) {
 		var a = ""
@@ -112,4 +126,4 @@ exports.sendUsers=function(user_data) { //updates users.csv
 		string += a;
 	}
 	fs.writeFileSync("data/users.csv", string, "utf8");
-}
+}*/

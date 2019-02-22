@@ -13,24 +13,29 @@
   </div>
   <div id="enter_name" class="bodydiv">
 
-    <h2>User Details <%if(locals.user){%><%-user.username%><%}%></h2>
+    <h2>User Details <%if(locals.user){%><%-user.name%><%}%></h2>
     <br>
-      <form action="/users<%if(locals.user){%>/<%-user.username%>?_method=PUT<%}%>" method="<%if(locals.user){%>post<%}else{%>post<%}%>">
+      <form action="/users<%if(locals.user){%>/<%-user["name"]%>?_method=PUT<%}%>" method="<%if(locals.user){%>post<%}else{%>post<%}%>">
   First name:<br>
-  <input type="text" name="fname" value="<%if(locals.user){%><%-user.fname%><%}%>" required><br>
+  <input type="text" name="fname" value="<%if(locals.user){%><%-user.firstname%><%}%>" required><br>
   Last name:<br>
-  <input type="text" name="lname" value="<%if(locals.user){%><%-user.lname%><%}%>" required><br>
+  <input type="text" name="lname" value="<%if(locals.user){%><%-user.lastname%><%}%>" required><br>
           Username:<br>
-    <input type="text" name="id" value="<%if(locals.user){%><%-user.username%><%}%>" required><br>
+    <input type="text" name="id" value="<%if(locals.user){%><%-user["name"]%><%}%>" required><br>
           Password:<br>
           <input type="text" name="password" value="<%if(locals.user){%><%-user.password%><%}%>" required><br>
           Reenter Password:<br>
           <input type="text" name="password2" value="<%if(locals.user){%><%-user.password%><%}%>" required><br>
           <button type="submit"><%if(locals.user){%>Submit changes<%}else{%>Create new user<%}%></button>
 </form>
+      <%if(locals.response2){%>
+<p class="red"><%-response2%></p>
+                             <%}%>
       <%if(locals.user){%>
       <br>
-      <form action="/users/<%-user.username%>_method=DELETE" method="post">
+      <%-user.response%>
+      <br>
+      <form action="/users/<%-user.name%>?_method=DELETE" method="post">
           Danger zone:<br>
           <button type="submit">Delete account</button>
           </form>

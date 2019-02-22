@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<title>P,R,S - Index</title>
-		<link rel="stylesheet" href="styles/style.css">
+		<link rel="stylesheet" href="<%if(locals.newuser){%>./../<%}%>styles/style.css">
 		<link href="https://fonts.googleapis.com/css?family=Roboto|Slabo+27px" rel="stylesheet">
 	</head>
 	<body>
@@ -26,6 +26,6 @@
 		</div>
 		<span id="userBox"><%for(var i=0;i<users.length;i++){%><%-users[i]%>,<%}%></span>
 		<% include global/footer %>
-		<script src="scripts/scripts.js"></script>
+		<script src="<%if(locals.newuser){%>./../<%}%>scripts/scripts.js"></script>
 	</body>
 </html>

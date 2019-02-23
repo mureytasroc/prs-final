@@ -25,6 +25,23 @@ if (document.title == "P,R,S - Game") {
 		refImg.className = "greenSVG";
 		setTimeout(onTimerElapsed, 1000);
 	});
+    
+    villainChoice=document.getElementById("villainChoice");
+    villainChoice.onchange=function(){
+        if(villainChoice.value==""){
+                    document.getElementById("villainWaitingHand").innerHTML="";
+            document.getElementById("villainWaitingHand").classList.remove("bodydiv");
+                        document.getElementById("villainWaitingHand").classList.add("hidden");
+        }
+        else{
+            document.getElementById("villainWaitingHand").classList.remove("hidden");
+            document.getElementById("villainWaitingHand").classList.add("bodydiv");
+            var vilName=villainChoice.value.toLowerCase().split(' ').join('_').split('.').join('');
+        document.getElementById("villainWaitingHand").innerHTML="<p>"+villainChoice.value+" is ready.</p><br><img id='"+vilName+"' class='villainWaitingImg' src='/images/"+vilName+"_waiting.svg'>";
+        }
+    }
+    
+    
 }
 
 if (document.title == "P,R,S - Index") { //handles login checking and redirection
@@ -104,3 +121,5 @@ if(document.title=="P,R,S - User Details"){
     document.getElementById("headerEdit").innerHTML = "";
     document.getElementById("headerEdit").href = "/";
 }
+
+

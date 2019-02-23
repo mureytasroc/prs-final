@@ -23,7 +23,7 @@
 				</select>
 				<br>
 				Enter your choice of villian:<br>
-				<select name="villain" required>
+				<select id="villainChoice" name="villain" required>
 					<option value=""> </option>
 					<option value="Bones">Bones</option>
 					<option value="Gato">Gato</option>
@@ -42,6 +42,7 @@
 				<button type = "submit" id="throw_choice_button">Throw Choice</button>
 			</form>
 		</div>
+        <div id="villainWaitingHand" class="hidden"></div>
 		<div id="referee" class="bodydiv">
 			<p id="referee-text">Referee: "Three!"</p>
 			<img id="refImage" src="images/ref/three.svg">

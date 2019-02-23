@@ -251,3 +251,17 @@ td {
 .red{
     color: red;
 }
+
+.villainWaitingImg{
+    	max-width: 25vh;
+	width: 12vw;
+	height: 100%;
+	margin-top: auto;
+	margin-bottom: auto;
+	margin-left: auto;
+	margin-right: auto;
+	left: auto;
+	top: auto;
+	display: block;
+	vertical-align: middle
+}

@@ -15,5 +15,8 @@
         "method-override": "^3.0.0",
         "node": "^11.10.0",
         "serve-favicon": "^2.5.0"
+    },
+    "engines": {
+        "node": "8.9.4"
     }
 }

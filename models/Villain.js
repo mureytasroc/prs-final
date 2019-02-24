@@ -1,12 +1,7 @@
 var GoogleSpreadsheet = require('google-spreadsheet');
-
 var creds = require('./client_secret.json');
-
-
-
-// Create a document object using the ID of the spreadsheet - obtained from its URL.
-
 var doc = new GoogleSpreadsheet('1AWi6mryVBu59Nx0Z9yszuou6xe9MetXxVZs1Om7FTps');
+
 /*exports.sendVillains=function(browser_data) { //updates villains.csv   
 		var string = "name,special,games_played,games_won,games_lost,paper,rock,scissors";
 	for (var i = 0; i < browser_data.length; i++) {

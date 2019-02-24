@@ -1,5 +1,4 @@
 var express = require('express');
-var fs = require('fs');
 var favicon = require('serve-favicon');
 
 var app = express();

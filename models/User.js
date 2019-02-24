@@ -1,11 +1,5 @@
 var GoogleSpreadsheet = require('google-spreadsheet');
-
 var creds = require('./client_secret.json');
-
-
-
-// Create a document object using the ID of the spreadsheet - obtained from its URL.
-
 var doc = new GoogleSpreadsheet('1AWi6mryVBu59Nx0Z9yszuou6xe9MetXxVZs1Om7FTps');
 
 exports.setUser=function(name, ob) { //updates user data

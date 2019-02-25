@@ -2,16 +2,22 @@ var GoogleSpreadsheet = require('google-spreadsheet');
 var creds = require('./client_secret.json');
 var doc = new GoogleSpreadsheet('1AWi6mryVBu59Nx0Z9yszuou6xe9MetXxVZs1Om7FTps');
 
-exports.setUser=function(name, ob) { //updates user data
+exports.setUser=function(name, ob, callback) { //updates user data
     	exports.getUsers(function(a){
 	for (var i = 0; i < a.length; i++) {
 		if (name == a[i]["name"]) {
 			a[i] = ob;
             a[i]["lastupdate"]=Date();
-            a[i].save();
+            a[i].save(callback);
 		}
 	}
                         });
+
+}
+
+exports.setUserNoWait=function(ob) { //updates user data
+    //ob["lastupdate"]=Date();
+            ob.save();
 
 }
 

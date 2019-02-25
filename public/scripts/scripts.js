@@ -17,7 +17,7 @@ if (document.title == "P,R,S - Game") {
 	if (!localUser) {
 		window.location.replace("/");
 	} else {
-		document.getElementById("greeter").textContent = localUser[0].toUpperCase() + localUser.substring(1) + ", it's your turn to bust a move!";
+		//document.getElementById("greeter").textContent = localUser[0].toUpperCase() + localUser.substring(1) + ", it's your turn to bust a move!";
 		document.getElementById("gameForm").action = "/user/" + localUser + "/results";
 	}
 	window.addEventListener("load", function () {
@@ -63,8 +63,6 @@ if (document.title == "P,R,S - Index") { //handles login checking and redirectio
 	 }
 }
 
-console.log("test");
-console.log(localUser);
 
 if (localUser) { //if user is already logged in
     document.getElementById("headerDivider").innerHTML="|";

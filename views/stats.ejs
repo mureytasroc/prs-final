@@ -11,7 +11,7 @@
 			<h2>Stats</h2>
 			<table id="statsTable">
 				<tr>
-					<th class="top_row">Player Name</th>
+					<th class="top_row">Player Username</th>
 					<th class="top_row">Rank</th>
 					<th class="top_row">Player Type</th>
 					<th class="top_row">Games Played</th>
@@ -27,6 +27,22 @@
 				<%- tableText%>
 			</table>
 		</div>
+        
+        <div id="usage-stats" class="bodydiv">
+        			<h2>Usage Stats</h2>
+			<table id="usage-statsTable">
+				<tr>
+					<th class="top_row">Home page visits</th>
+					<th class="top_row">Rules page visits</th>
+					<th class="top_row">Stats page visits</th>
+                    <th class="top_row">About page visits</th>
+                    <th class="top_row">Game page visits</th>
+                    <th class="top_row">Account details page visits</th>
+                    <th class="top_row">Contact page visits</th>
+				</tr>
+				<%- usageTableText%>
+			</table>
+        </div>
 		<% include global/footer %>
 		<script src="scripts/scripts.js"></script>
 	</body>

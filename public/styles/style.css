@@ -171,6 +171,16 @@ td {
 	font-size: 1vw
 }
 
+#usage-stats {
+	width: auto;
+    max-width: none;
+}
+
+#usage-statsTable {
+	width: 100%;
+	font-size: 1vw
+}
+
 #rulesTable {
 	margin-left: auto;
 	margin-right: auto

@@ -15,8 +15,8 @@
 			</div>
 		</div>
 		<div id="referee" class="bodydiv">
-			<% var whoWon=results.name[0].toUpperCase() + results.name.substring(1)+" wins! "; if(results.outcome=="lost"){whoWon=results.villain+" wins. "} if(results.outcome=="tied"){whoWon="Tie. "}%>
-			<p id="referee_response">Referee: "<%=whoWon%><%=results.villain%> threw <%=results.browserChoice%> (left), and <%=results.name%> threw <%=results.weapon%> (right)."</p>
+			<% var whoWon=results.fname+" wins! "; if(results.outcome=="lost"){whoWon=results.villain+" wins. "} if(results.outcome=="tied"){whoWon="Tie. "}%>
+			<p id="referee_response">Referee: "<%=whoWon%><%=results.villain%> threw <%=results.browserChoice%> (left), and <%=results.fname%> threw <%=results.weapon%> (right)."</p>
 			<div class="imageHolder">
 				<%var refColor= "blackSVG"; if(results.outcome=="won"){refColor="greenSVG"}if(results.outcome=="lost"){refColor="redSVG"}%>
 				<img id="refImage" class="<%- refColor%>" src="../../images/ref/<%-results.outcome%>.svg">

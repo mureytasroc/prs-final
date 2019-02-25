@@ -37,6 +37,11 @@ router.get('/user/new', function(req, res){
 
 
 router.get('/users/:id/edit', function(req, res){
+    Admin.getPageStats(function(s){
+        
+        s[5]["num"]++;
+        s[5].save();
+        
         var log={
         'timestamp':Date(),
         'httpverb':"GET",
@@ -52,6 +57,7 @@ router.get('/users/:id/edit', function(req, res){
     res.setHeader('Content-Type', 'text/html')
     res.render('user_details', {user:u});
   });
+});
 });
 
 /*router.get('/users/game', function(req, res){
@@ -85,8 +91,11 @@ router.get('/user/:id/results', function (request, response) {
 	var villain = request.query.villain;
 	var browserChoice = Villain.browserOutcome(villain, request.query.weapon);
 	GameLogic.findResult(request.params.id, browserChoice, request.query.weapon, villain,function(outcome){
-        	var result = {
+        User.getUserByName(request.params.id,function(usar){
+            var fname=usar["firstname"];
+            var result = {
 		name: request.params.id,
+                fname:fname,
 		weapon: request.query.weapon,
 		browserChoice: browserChoice,
 		outcome: outcome,
@@ -99,6 +108,7 @@ router.get('/user/:id/results', function (request, response) {
 		results: result
 	});
     });
+        })
 });
 
 
@@ -134,15 +144,19 @@ router.put('/users/:id', function(req, res){
                   updatedUser=req.body.id;
               }
                 u['name']=req.body.id;
-              console.log(req.params.id,u['name']);
+
       u['firstname']=req.body.fname;
       u['lastname']=req.body.lname;
       u['password']=req.body.password;
-        User.setUser(req.params.id, u);
-          u['response']="<p class='green'>User details updated.</p>";
-    res.status(200);
-    res.setHeader('Content-Type', 'text/html')
-    res.render('user_details', {updatedUser:updatedUser,user:u});
+        User.setUser(req.params.id,u, function(){
+            console.log("read");
+              User.getUserByName(req.body.id, function(us){
+                us['response']="<p class='green'>User details updated.</p>";
+                res.status(200);
+                res.setHeader('Content-Type', 'text/html')
+                res.render('user_details', {updatedUser:updatedUser,user:us});
+              });
+        });
       }
       else{
           u['response']="<p class='red'>Entered passwords did not match.</p>";

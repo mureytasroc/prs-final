@@ -14,3 +14,13 @@ exports.logData=function(params){
         doc.addRow(3, params, function(){});
     });
 }
+
+exports.getPageStats=function(callback){
+    	doc.useServiceAccountAuth(creds, function (err) {
+	  doc.getRows(4, function (err, rows) {
+	    callback(rows);
+
+	  });
+
+	});
+}

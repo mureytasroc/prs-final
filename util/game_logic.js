@@ -48,7 +48,7 @@ exports.tied = function(username, browsC, throwC, villain, callback) { //handles
 	User.getUserByName(username,function(userObject){
            userObject[throwC]++;
 	       userObject["gamesplayed"]=parseInt(userObject["gamesplayed"])+1;
-	       User.setUser(userObject);
+	       User.setUserNoWait(userObject);
             Villain.getVillainByName(villain,function(villainObject){
                 	villainObject[browsC]++;
 	villainObject["gamesplayed"]=parseInt(villainObject["gamesplayed"])+1;
@@ -68,7 +68,7 @@ exports.won = function(username, browsC, throwC, villain, callback) { //handles 
            userObject[throwC]++;
 	   userObject["gamesplayed"]=parseInt(userObject["gamesplayed"])+1;
 	   userObject["gameswon"]=parseInt(userObject["gameswon"])+1;
-	       User.setUser(userObject);
+	       User.setUserNoWait(userObject);
             Villain.getVillainByName(villain,function(villainObject){
                 	villainObject[browsC]++;
 	villainObject["gamesplayed"]=parseInt(villainObject["gamesplayed"])+1;
@@ -87,7 +87,7 @@ exports.lost = function(username, browsC, throwC, villain, callback) { //handles
            userObject[throwC]++;
 	userObject["gamesplayed"]=parseInt(userObject["gamesplayed"])+1;
 	userObject["gameslost"]=parseInt(userObject["gameslost"])+1;
-	       User.setUser(userObject);
+	       User.setUserNoWait(userObject);
             Villain.getVillainByName(villain,function(villainObject){
                 	villainObject[browsC]++;
 	villainObject["gamesplayed"]=parseInt(villainObject["gamesplayed"])+1;

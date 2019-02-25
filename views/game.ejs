@@ -12,7 +12,7 @@
 		</div>
 		<div id="throw_choice" class="bodydiv">
 			<h2>Play the Game</h2>
-			<h4 id="greeter"><%if(locals.user){%><%=user.firstname%>, it's your turn to bust a move!<%}else{%>It's your turn to bust a move!<%}%></h4>
+			<h4 id="greeter">It's your turn to bust a move!</h4>
 			<form id="gameForm" action="/" method="get">
 				Enter your choice of weapon:<br>
 				<select name="weapon" required>
@@ -42,7 +42,7 @@
 				<button type = "submit" id="throw_choice_button">Throw Choice</button>
 			</form>
 		</div>
-        <div id="villainWaitingHand" class="hidden"></div>
+		<div id="villainWaitingHand" class="hidden"></div>
 		<div id="referee" class="bodydiv">
 			<p id="referee-text">Referee: "Three!"</p>
 			<img id="refImage" src="images/ref/three.svg">

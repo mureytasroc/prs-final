@@ -95,8 +95,8 @@ td {
 	display: block;
 }
 
-.link{
-    cursor: pointer;
+.link {
+	cursor: pointer;
 }
 
 .userImage {
@@ -163,7 +163,7 @@ td {
 
 #stats {
 	width: auto;
-    max-width: none;
+	max-width: none;
 }
 
 #statsTable {
@@ -173,7 +173,7 @@ td {
 
 #usage-stats {
 	width: auto;
-    max-width: none;
+	max-width: none;
 }
 
 #usage-statsTable {
@@ -186,6 +186,7 @@ td {
 	margin-right: auto
 }
 
+
 /*Ref coloring*/
 
 .redSVG {
@@ -195,6 +196,7 @@ td {
 .greenSVG {
 	filter: invert(61%) sepia(100%) saturate(3183%) hue-rotate(83deg) brightness(116%) contrast(126%)
 }
+
 
 /*Villain coloring*/
 
@@ -246,7 +248,7 @@ td {
 	filter: invert(18%) sepia(49%) saturate(6113%) hue-rotate(354deg) brightness(99%) contrast(129%)
 }
 
-.styledlink{
+.styledlink {
 	color: blue
 }
 
@@ -254,16 +256,16 @@ td {
 	color: red
 }
 
-.green{
-    color: green;
+.green {
+	color: green;
 }
 
-.red{
-    color: red;
+.red {
+	color: red;
 }
 
-.villainWaitingImg{
-    	max-width: 25vh;
+.villainWaitingImg {
+	max-width: 25vh;
 	width: 12vw;
 	height: 100%;
 	margin-top: auto;

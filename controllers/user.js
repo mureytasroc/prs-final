@@ -10,7 +10,7 @@ router.get('/user/new', function (req, res) {
     Admin.getPageStats(function (s) {
         s[5]["num"]++;
 		s[5].save();
-    }
+    });
         
     var log = {
         'timestamp': Date(),
@@ -28,28 +28,27 @@ router.get('/user/new', function (req, res) {
 
 router.get('/users/:id/edit', function (req, res) {
 	Admin.getPageStats(function (s) {
-
-		s[5]["num"]++;
+        s[5]["num"]++;
 		s[5].save();
+    });
 
-		var log = {
-			'timestamp': Date(),
-			'httpverb': "GET",
-			'username': req.params.id,
-			'route': "/user/:id/edit"
-		}
-		Admin.logData(log);
-		console.log(log);
+    var log = {
+        'timestamp': Date(),
+        'httpverb': "GET",
+        'username': req.params.id,
+        'route': "/user/:id/edit"
+    }
+    Admin.logData(log);
+    console.log(log);
 
 
-		User.getUserByName(req.params.id, function (u) {
-			res.status(200);
-			res.setHeader('Content-Type', 'text/html')
-			res.render('user_details', {
-				user: u
-			});
-		});
-	});
+    User.getUserByName(req.params.id, function (u) {
+        res.status(200);
+        res.setHeader('Content-Type', 'text/html')
+        res.render('user_details', {
+            user: u
+        });
+    });
 });
 
 router.get('/user/:id/results', function (request, response) {
@@ -86,6 +85,12 @@ router.get('/user/:id/results', function (request, response) {
 });
 
 router.put('/users/:id', function (req, res) {
+    
+    Admin.getPageStats(function (s) {
+        s[5]["num"]++;
+		s[5].save();
+    });
+    
 	var log = {
 		'timestamp': Date(),
 		'httpverb': "PUT",
@@ -145,7 +150,13 @@ router.put('/users/:id', function (req, res) {
 });
 
 router.delete('/users/:id', function (req, res) {
-	var log = {
+	
+    Admin.getPageStats(function (s) {
+        s[0]["num"]++;
+		s[0].save();
+    });
+    
+    var log = {
 		'timestamp': Date(),
 		'httpverb': "DELETE",
 		'username': req.params.id,
@@ -167,6 +178,12 @@ router.delete('/users/:id', function (req, res) {
 });
 
 router.post('/users', function (req, res) {
+    
+    Admin.getPageStats(function (s) {
+        s[0]["num"]++;
+		s[0].save();
+    });
+    
 	var log = {
 		'timestamp': Date(),
 		'httpverb': "POST",
@@ -200,6 +217,13 @@ router.post('/users', function (req, res) {
 });
 
 router.get('/login', function (request, response) {
+    
+    Admin.getPageStats(function (s) {
+        s[0]["num"]++;
+		s[0].save();
+    });
+    
+    
 	var log = {
 		'timestamp': Date(),
 		'httpverb': "GET",

@@ -7,22 +7,23 @@ var GameLogic = require(__dirname + '/../util/game_logic');
 var Admin = require(__dirname + '/../models/Admin');
 
 router.get('/user/new', function (req, res) {
-	var log = {
-		'timestamp': Date(),
-		'httpverb': "GET",
-		'username': "",
-		'route': "/user/new"
-	}
-	Admin.logData(log);
-	console.log(log);
+    Admin.getPageStats(function (s) {
+        s[5]["num"]++;
+		s[5].save();
+    }
+        
+    var log = {
+        'timestamp': Date(),
+        'httpverb': "GET",
+        'username': "",
+        'route': "/user/new"
+    }
+    Admin.logData(log);
+    console.log(log);
 
-	User.getUserByName(req.params.id, function (u) {
-		res.status(200);
-		res.setHeader('Content-Type', 'text/html')
-		res.render('user_details', {
-			user: u
-		});
-	});
+    res.status(200);
+    res.setHeader('Content-Type', 'text/html')
+    res.render('user_details');
 });
 
 router.get('/users/:id/edit', function (req, res) {
